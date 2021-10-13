@@ -77,27 +77,19 @@ class RegisterFragment : Fragment() {
     }
 
     private fun register(email: String, password: String) = scopeIO.launch {
-        if (valid(email, password)) {
-            val userDao = UserDatabase.getDatabase(requireContext()).userDao()
-            val repository = UserRepository(userDao)
-            repository.registerUser(User(email, password))
-            activity?.runOnUiThread {
-                Toast.makeText(
-                    requireContext(),
-                    "$email is registered!",
-                    Toast.LENGTH_SHORT
-                )
-                    .show()
-                activity?.onBackPressed()
-            }
-        } else
-            activity?.runOnUiThread {
-                Toast.makeText(requireContext(), "Fill all fields!", Toast.LENGTH_SHORT).show()
-            }
+        val userDao = UserDatabase.getDatabase(requireContext()).userDao()
+        val repository = UserRepository(userDao)
+        repository.registerUser(User(email, password))
+        activity?.runOnUiThread {
+            Toast.makeText(
+                requireContext(),
+                "$email is registered!",
+                Toast.LENGTH_SHORT
+            )
+                .show()
+            activity?.onBackPressed()
+        }
     }
-
-    private fun valid(email: String, password: String): Boolean =
-        email.isNotEmpty() && password.isNotEmpty()
 
     override fun onDestroy() {
         super.onDestroy()

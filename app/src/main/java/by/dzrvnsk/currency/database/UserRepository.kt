@@ -9,4 +9,7 @@ class UserRepository(private val userDao: UserDao) {
         userDao.registerUser(user)
     }
 
+    @WorkerThread
+    suspend fun login(email: String, password: String): User? = userDao.login(email, password)
+
 }
