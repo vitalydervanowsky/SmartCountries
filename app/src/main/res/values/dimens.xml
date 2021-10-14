@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Offsets -->
+    <dimen name="small_offset">4dp</dimen>
+    <dimen name="medium_offset">8dp</dimen>
+    <dimen name="big_offset">16dp</dimen>
+    <dimen name="great_offset">32dp</dimen>
+
+    <!-- Font size -->
+    <dimen name="small_text_size">12sp</dimen>
+    <dimen name="medium_text_size">16sp</dimen>
+    <dimen name="big_text_size">24sp</dimen>
+    <dimen name="title_size">32sp</dimen>
+</resources>
