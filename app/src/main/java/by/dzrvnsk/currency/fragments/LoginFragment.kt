@@ -86,7 +86,7 @@ class LoginFragment : Fragment() {
             if (user != null) {
                 Toast.makeText(requireContext(), email, Toast.LENGTH_SHORT).show()
                 parentFragmentManager.beginTransaction()
-                    .replace(R.id.container, NextFragment())
+                    .replace(R.id.container, ListFragment())
                     .commit()
             } else {
                 Toast.makeText(

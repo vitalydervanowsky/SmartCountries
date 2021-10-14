@@ -1,7 +1,7 @@
 package by.dzrvnsk.currency
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import by.dzrvnsk.currency.databinding.ActivityMainBinding
 import by.dzrvnsk.currency.fragments.LoginFragment
 
