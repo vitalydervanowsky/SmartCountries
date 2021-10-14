@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Currency</string>
+    <string name="app_name">Smart Countries</string>
     <string name="welcome">Welcome</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
@@ -8,4 +8,5 @@
     <string name="email_password_error">Incorrect inputted data</string>
     <string name="new_user_registration">New user registration</string>
     <string name="ivCountryFlagContentDescription">Flag of the country</string>
+    <string name="population">Population:</string>
 </resources>
