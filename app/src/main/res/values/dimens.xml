@@ -11,4 +11,7 @@
     <dimen name="medium_text_size">16sp</dimen>
     <dimen name="big_text_size">24sp</dimen>
     <dimen name="title_size">32sp</dimen>
+
+    <integer name="delay_anim_slide">1000</integer>
+    <integer name="delay_anim_fade">1000</integer>
 </resources>

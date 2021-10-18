@@ -13,8 +13,9 @@ class MainActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
-        supportFragmentManager.beginTransaction()
-            .add(binding.container.id, LoginFragment())
-            .commit()
+        if (supportFragmentManager.findFragmentById(R.id.container) == null)
+            supportFragmentManager.beginTransaction()
+                .add(binding.container.id, LoginFragment())
+                .commit()
     }
 }
