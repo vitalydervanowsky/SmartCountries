@@ -45,6 +45,12 @@ class LoginFragment : Fragment() {
             }
             btnRegister.setOnClickListener {
                 parentFragmentManager.beginTransaction()
+                    .setCustomAnimations(
+                        R.anim.slide_in_bottom,
+                        R.anim.fade_out,
+                        R.anim.fade_in,
+                        R.anim.slide_out_bottom
+                    )
                     .addToBackStack(null)
                     .replace(R.id.container, RegisterFragment())
                     .commit()
@@ -84,7 +90,6 @@ class LoginFragment : Fragment() {
         val user = repository.login(email, password)
         activity?.runOnUiThread {
             if (user != null) {
-                Toast.makeText(requireContext(), email, Toast.LENGTH_SHORT).show()
                 parentFragmentManager.beginTransaction()
                     .replace(R.id.container, ListFragment())
                     .commit()
