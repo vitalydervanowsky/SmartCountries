@@ -11,7 +11,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/big_offset">
+        android:padding="@dimen/medium_offset">
 
         <ImageView
             android:id="@+id/iv_country_flag"
@@ -69,32 +69,35 @@
             tools:text="Region" />
 
         <TextView
-            android:id="@+id/tv_country_population_title"
+            android:id="@+id/tv_country_area"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/medium_offset"
-            android:text="@string/population"
-            app:layout_constraintEnd_toStartOf="@id/tv_country_population"
+            android:textSize="@dimen/medium_text_size"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_country_region" />
+            app:layout_constraintTop_toBottomOf="@id/tv_country_region"
+            tools:text="Area: 100000" />
 
         <TextView
             android:id="@+id/tv_country_population"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="@id/tv_country_population_title"
+            android:layout_marginTop="@dimen/medium_offset"
+            android:textSize="@dimen/medium_text_size"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/tv_country_population_title"
-            tools:text="1000" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_country_area"
+            tools:text="Population: 100000" />
 
         <FrameLayout
             android:id="@+id/map_container"
             android:layout_width="match_parent"
-            android:layout_height="500dp"
-            android:layout_marginTop="@dimen/medium_offset"
+            android:layout_height="400dp"
+            android:layout_marginTop="@dimen/great_offset"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_country_population_title" />
+            app:layout_constraintTop_toBottomOf="@id/tv_country_population" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

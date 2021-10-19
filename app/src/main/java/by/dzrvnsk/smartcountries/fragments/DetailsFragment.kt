@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import by.dzrvnsk.smartcountries.R
 import by.dzrvnsk.smartcountries.databinding.FragmentDetailsBinding
 import by.dzrvnsk.smartcountries.model.CountryViewModel
 import com.bumptech.glide.Glide
@@ -42,9 +43,15 @@ class DetailsFragment : Fragment() {
                 }
                 val region = "${it.region}, ${it.subregion}"
                 tvCountryRegion.text = region
-                tvCountryPopulation.text = it.population.toString()
+                val area = "Area: ${it.area.toInt()}"
+                tvCountryArea.text = area
+                val population = "Population ${it.population}"
+                tvCountryPopulation.text = population
             })
 
+            parentFragmentManager.beginTransaction()
+                .add(R.id.map_container, MapsFragment())
+                .commit()
         }
     }
 
