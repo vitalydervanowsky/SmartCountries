@@ -5,45 +5,52 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import by.dzrvnsk.smartcountries.R
-import by.dzrvnsk.smartcountries.adapter.CountryAdapter
-import by.dzrvnsk.smartcountries.databinding.FragmentListBinding
-import by.dzrvnsk.smartcountries.model.CountryViewModel
+import by.dzrvnsk.smartcountries.databinding.FragmentMenuBinding
 
-class ListFragment : Fragment() {
+class MenuFragment : Fragment() {
 
-    private var _binding: FragmentListBinding? = null
+    private var _binding: FragmentMenuBinding? = null
     private val binding get() = _binding!!
-
-    private val countriesViewModel: CountryViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentListBinding.inflate(layoutInflater, container, false)
+        _binding = FragmentMenuBinding.inflate(layoutInflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        countriesViewModel.countriesLiveData.observe(viewLifecycleOwner, {
-            binding.rvList.adapter = CountryAdapter(it) { currentCountry ->
-                countriesViewModel.setCurrentCountry(currentCountry)
+        binding.apply {
+            btnLearn.setOnClickListener {
                 parentFragmentManager.beginTransaction()
                     .setCustomAnimations(
-                        R.anim.slide_in_right,
+                        R.anim.scale_in,
                         R.anim.fade_out,
                         R.anim.fade_in,
-                        R.anim.slide_out_right
+                        R.anim.scale_out
                     )
                     .addToBackStack(null)
-                    .replace(R.id.container, DetailsFragment())
+                    .replace(R.id.container, ListFragment())
                     .commit()
             }
-        })
+
+            btnTest.setOnClickListener {
+                parentFragmentManager.beginTransaction()
+                    .setCustomAnimations(
+                        R.anim.slide_in_bottom,
+                        R.anim.fade_out,
+                        R.anim.fade_in,
+                        R.anim.slide_out_bottom
+                    )
+                    .addToBackStack(null)
+                    .replace(R.id.container, LoginFragment())
+                    .commit()
+            }
+        }
     }
 
     override fun onDestroy() {

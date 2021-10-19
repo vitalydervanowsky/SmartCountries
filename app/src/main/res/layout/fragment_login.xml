@@ -18,20 +18,20 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/tv_login_email"
+        android:id="@+id/tv_login_login"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/big_offset"
-        android:hint="@string/email"
-        app:helperText="Input your email here"
+        android:hint="@string/login"
+        app:helperText="Input your login here"
         app:helperTextEnabled="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_welcome"
-        app:startIconDrawable="@drawable/ic_login_email">
+        app:startIconDrawable="@drawable/ic_login_profile">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edit_login_email"
+            android:id="@+id/edit_login_login"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textEmailAddress" />
@@ -49,7 +49,7 @@
         app:helperTextEnabled="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_login_email"
+        app:layout_constraintTop_toBottomOf="@id/tv_login_login"
         app:startIconDrawable="@drawable/ic_login_password">
 
         <com.google.android.material.textfield.TextInputEditText

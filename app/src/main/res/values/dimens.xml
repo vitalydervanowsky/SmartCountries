@@ -14,4 +14,5 @@
 
     <integer name="delay_anim_slide">1000</integer>
     <integer name="delay_anim_fade">1000</integer>
+    <integer name="delay_anim_scale">500</integer>
 </resources>

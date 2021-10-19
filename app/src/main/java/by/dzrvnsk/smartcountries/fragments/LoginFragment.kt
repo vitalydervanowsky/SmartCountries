@@ -41,7 +41,7 @@ class LoginFragment : Fragment() {
             btnLogin.isEnabled = false
 
             btnLogin.setOnClickListener {
-                login(editLoginEmail.text.toString(), editLoginPassword.text.toString())
+                login(editLoginLogin.text.toString(), editLoginPassword.text.toString())
             }
             btnRegister.setOnClickListener {
                 parentFragmentManager.beginTransaction()
@@ -56,7 +56,7 @@ class LoginFragment : Fragment() {
                     .commit()
             }
             val loginObservable = Observable.create<Boolean> { emitter ->
-                editLoginEmail.addTextChangedListener {
+                editLoginLogin.addTextChangedListener {
                     if (!emitter.isDisposed)
                         emitter.onNext(it.toString().isNotEmpty())
                 }
@@ -84,13 +84,14 @@ class LoginFragment : Fragment() {
         }
     }
 
-    private fun login(email: String, password: String) = scopeIO.launch {
+    private fun login(login: String, password: String) = scopeIO.launch {
         val userDao = UserDatabase.getDatabase(requireContext()).userDao()
         val repository = UserRepository(userDao)
-        val user = repository.login(email, password)
+        val user = repository.loginUser(login, password)
         activity?.runOnUiThread {
             if (user != null) {
                 parentFragmentManager.beginTransaction()
+                    .addToBackStack(null)
                     .replace(R.id.container, ListFragment())
                     .commit()
             } else {

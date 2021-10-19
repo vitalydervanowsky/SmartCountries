@@ -11,7 +11,7 @@ interface UserDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun registerUser(user: User)
 
-    @Query("SELECT * from users where email=(:email) and password=(:password)")
-    suspend fun login(email: String, password: String): User?
+    @Query("SELECT * from users where login=(:login) and password=(:password)")
+    suspend fun loginUser(login: String, password: String): User?
 
 }
