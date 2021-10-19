@@ -42,7 +42,7 @@ class RegisterFragment : Fragment() {
             btnRegister.isEnabled = false
 
             val emailObservable = Observable.create<Boolean> { emitter ->
-                editRegistrationEmail.addTextChangedListener {
+                editRegistrationLogin.addTextChangedListener {
                     if (!emitter.isDisposed)
                         emitter.onNext(it.toString().isNotEmpty())
                 }
@@ -69,21 +69,21 @@ class RegisterFragment : Fragment() {
             )
             btnRegister.setOnClickListener {
                 register(
-                    editRegistrationEmail.text.toString(),
+                    editRegistrationLogin.text.toString(),
                     editRegistrationPassword.text.toString()
                 )
             }
         }
     }
 
-    private fun register(email: String, password: String) = scopeIO.launch {
+    private fun register(login: String, password: String) = scopeIO.launch {
         val userDao = UserDatabase.getDatabase(requireContext()).userDao()
         val repository = UserRepository(userDao)
-        repository.registerUser(User(email, password))
+        repository.registerUser(User(login, password))
         activity?.runOnUiThread {
             Toast.makeText(
                 requireContext(),
-                "$email is registered!",
+                "$login is now registered!",
                 Toast.LENGTH_SHORT
             )
                 .show()

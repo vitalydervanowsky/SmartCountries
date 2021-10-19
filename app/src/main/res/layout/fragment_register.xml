@@ -18,23 +18,23 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/tv_registration_email"
+        android:id="@+id/tv_registration_login"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/big_offset"
-        android:hint="@string/email"
-        app:helperText="Input your email here"
+        android:hint="@string/login"
+        app:helperText="Input your login here"
         app:helperTextEnabled="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_new_user_registration"
-        app:startIconDrawable="@drawable/ic_login_email">
+        app:startIconDrawable="@drawable/ic_login_profile">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edit_registration_email"
+            android:id="@+id/edit_registration_login"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textEmailAddress" />
+            android:inputType="text" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -50,7 +50,7 @@
         app:helperTextEnabled="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_registration_email"
+        app:layout_constraintTop_toBottomOf="@id/tv_registration_login"
         app:startIconDrawable="@drawable/ic_login_password">
 
         <com.google.android.material.textfield.TextInputEditText

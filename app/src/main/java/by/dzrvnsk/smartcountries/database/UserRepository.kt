@@ -10,6 +10,6 @@ class UserRepository(private val userDao: UserDao) {
     }
 
     @WorkerThread
-    suspend fun login(email: String, password: String): User? = userDao.login(email, password)
+    suspend fun loginUser(login: String, password: String): User? = userDao.loginUser(login, password)
 
 }
