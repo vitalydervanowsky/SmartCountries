@@ -37,15 +37,15 @@ class DetailsFragment : Fragment() {
                 tvCountryName.text = it.name.common
                 tvCountryNameOfficial.text = it.name.official
                 if (it.capital != null) {
-                    tvCountryCapital.text = it.capital[0]
+                    tvCountryCapital.text = it.capital.first()
                 } else {
                     tvCountryCapital.visibility = View.GONE
                 }
                 val region = "${it.region}, ${it.subregion}"
                 tvCountryRegion.text = region
-                val area = "Area: ${it.area.toInt()}"
+                val area = "Area: ${separateDigits(it.area.toInt())}"
                 tvCountryArea.text = area
-                val population = "Population ${it.population}"
+                val population = "Population: ${separateDigits(it.population)}"
                 tvCountryPopulation.text = population
             })
 
@@ -53,6 +53,22 @@ class DetailsFragment : Fragment() {
                 .add(R.id.map_container, MapsFragment())
                 .commit()
         }
+    }
+
+    private fun separateDigits(int: Int) : String {
+        val stringBuilder = StringBuilder()
+        var count = 0
+        var number = int
+        while (number > 0) {
+            val digit = number % 10
+            number /= 10
+            if (count % 3 == 0) {
+                stringBuilder.append(" ")
+            }
+            stringBuilder.append(digit)
+            count++
+        }
+        return stringBuilder.toString().reversed()
     }
 
     override fun onDestroy() {
