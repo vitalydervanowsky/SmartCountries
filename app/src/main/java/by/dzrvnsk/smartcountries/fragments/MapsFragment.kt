@@ -34,7 +34,7 @@ class MapsFragment : Fragment() {
                 googleMap.addMarker(
                     MarkerOptions()
                         .position(country)
-                        .title("Marker in ${it.name.common}")
+                        .title(it.name.common)
                 )
                 val zoom = when (it.area.toInt()) {
                     in 0..10000 -> 7f

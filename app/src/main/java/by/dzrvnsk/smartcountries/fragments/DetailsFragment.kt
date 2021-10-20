@@ -1,5 +1,7 @@
 package by.dzrvnsk.smartcountries.fragments
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -30,22 +32,35 @@ class DetailsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.apply {
-            countriesViewModel.currentCountryLiveData.observe(viewLifecycleOwner, {
+            countriesViewModel.currentCountryLiveData.observe(viewLifecycleOwner, { country ->
                 Glide.with(requireContext())
-                    .load(it.flags.png)
+                    .load(country.flags.png)
                     .into(ivCountryFlag)
-                tvCountryName.text = it.name.common
-                tvCountryNameOfficial.text = it.name.official
-                if (it.capital != null) {
-                    tvCountryCapital.text = it.capital.first()
+                tvCountryName.text = country.name.common
+                tvCountryNameOfficial.text = country.name.official
+                tvCountryNameOfficial.setOnClickListener {
+                    val intentUri = Uri.parse(country.maps.openStreetMaps)
+                    val mapIntent = Intent(Intent.ACTION_VIEW, intentUri)
+                    startActivity(mapIntent)
+                }
+                if (country.capital != null) {
+                    tvCountryCapital.text = country.capital.first()
                 } else {
                     tvCountryCapital.visibility = View.GONE
                 }
-                val region = "${it.region}, ${it.subregion}"
+                tvCountryCapital.setOnClickListener {
+                    val gmmIntentUri =
+                        Uri.parse("geo:${country.capitalInfo.latlng[0]},${country.capitalInfo.latlng[1]}?z=11")
+                    val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
+                    mapIntent.setPackage("com.google.android.apps.maps")
+                    startActivity(mapIntent)
+
+                }
+                val region = "${country.region}, ${country.subregion}"
                 tvCountryRegion.text = region
-                val area = "Area: ${separateDigits(it.area.toInt())}"
+                val area = "Area: ${separateDigits(country.area.toInt())}"
                 tvCountryArea.text = area
-                val population = "Population: ${separateDigits(it.population)}"
+                val population = "Population: ${separateDigits(country.population)}"
                 tvCountryPopulation.text = population
             })
 
@@ -55,7 +70,7 @@ class DetailsFragment : Fragment() {
         }
     }
 
-    private fun separateDigits(int: Int) : String {
+    private fun separateDigits(int: Int): String {
         val stringBuilder = StringBuilder()
         var count = 0
         var number = int
