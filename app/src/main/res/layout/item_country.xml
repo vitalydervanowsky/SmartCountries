@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="@dimen/small_offset"
-    android:background="@android:color/darker_gray"
+    android:background="@color/light_gray"
     android:padding="@dimen/small_offset">
 
     <ImageView

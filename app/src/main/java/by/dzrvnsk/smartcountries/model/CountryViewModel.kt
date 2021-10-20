@@ -10,6 +10,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
+import kotlin.random.Random
 
 class CountryViewModel : ViewModel() {
 
@@ -26,6 +27,7 @@ class CountryViewModel : ViewModel() {
                     response: retrofit2.Response<Countries>
                 ) {
                     countriesLiveData.value = response.body()
+                    currentCountryLiveData.value = response.body()?.first()
                 }
 
                 override fun onFailure(call: Call<Countries>, t: Throwable) {

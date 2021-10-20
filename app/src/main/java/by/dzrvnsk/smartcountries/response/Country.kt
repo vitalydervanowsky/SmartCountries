@@ -4,7 +4,7 @@ data class Country(
     val altSpellings: List<String>,
     val area: Double,
     val borders: List<String>,
-    val capital: List<String>,
+    val capital: List<String>?,
     val car: Car,
     val cca2: String,
     val cca3: String,

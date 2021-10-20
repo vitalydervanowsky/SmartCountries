@@ -4,19 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="@dimen/small_offset"
-    android:background="@android:color/darker_gray"
+    android:padding="@dimen/small_offset"
+    android:background="@color/light_gray"
     tools:context=".fragments.DetailsFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/medium_offset">
+        android:layout_height="wrap_content">
 
         <ImageView
             android:id="@+id/iv_country_flag"
             android:layout_width="match_parent"
-            android:layout_height="300dp"
+            android:layout_height="200dp"
             android:contentDescription="@string/ivCountryFlagContentDescription"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

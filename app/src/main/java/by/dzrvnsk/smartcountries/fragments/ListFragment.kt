@@ -1,5 +1,7 @@
 package by.dzrvnsk.smartcountries.fragments
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -17,6 +19,9 @@ class ListFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val countriesViewModel: CountryViewModel by activityViewModels()
+    private val sharedPrefs: SharedPreferences by lazy {
+        requireActivity().getSharedPreferences("RANDOM_COUNTRY", Context.MODE_PRIVATE)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -43,6 +48,13 @@ class ListFragment : Fragment() {
                     .replace(R.id.container, DetailsFragment())
                     .commit()
             }
+        })
+
+        countriesViewModel.currentCountryLiveData.observe(viewLifecycleOwner, {
+            sharedPrefs.edit()
+                .putString("RANDOM_COUNTRY_NAME", it.name.common)
+                .putString("RANDOM_COUNTRY_FLAG", it.flags.png)
+                .apply()
         })
     }
 
