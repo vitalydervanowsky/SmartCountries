@@ -1,5 +1,7 @@
 package by.dzrvnsk.smartcountries.fragments
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -26,12 +28,18 @@ class LoginFragment : Fragment() {
 
     private val compositeDisposable = CompositeDisposable()
     private val scopeIO = CoroutineScope(Dispatchers.IO)
+    private val sharedPrefs: SharedPreferences by lazy {
+        requireActivity().getSharedPreferences("LAST_LOGIN", Context.MODE_PRIVATE)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentLoginBinding.inflate(inflater, container, false)
+
+        binding.editLoginLogin.setText(sharedPrefs.getString("LAST_USER_NAME", ""))
+
         return binding.root
     }
 
@@ -90,6 +98,9 @@ class LoginFragment : Fragment() {
         val user = repository.loginUser(login, password)
         activity?.runOnUiThread {
             if (user != null) {
+                sharedPrefs.edit()
+                    .putString("LAST_USER_NAME", login)
+                    .apply()
                 parentFragmentManager.beginTransaction()
                     .addToBackStack(null)
                     .replace(R.id.container, ListFragment())
