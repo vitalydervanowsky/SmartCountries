@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="@dimen/small_offset"
     android:background="@color/light_gray"
+    android:padding="@dimen/small_offset"
     tools:context=".fragments.DetailsFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -92,7 +92,7 @@
         <FrameLayout
             android:id="@+id/map_container"
             android:layout_width="match_parent"
-            android:layout_height="400dp"
+            android:layout_height="300dp"
             android:layout_marginTop="@dimen/great_offset"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

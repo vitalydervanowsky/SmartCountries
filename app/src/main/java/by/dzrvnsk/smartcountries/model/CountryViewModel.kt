@@ -1,5 +1,6 @@
 package by.dzrvnsk.smartcountries.model
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -10,24 +11,21 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
-import kotlin.random.Random
 
-class CountryViewModel : ViewModel() {
+class CountryViewModel(private val apiCountry: ApiCountry) : ViewModel() {
 
-    val countriesLiveData = MutableLiveData<Countries>()
-    val currentCountryLiveData = MutableLiveData<Country>()
+    private val _countriesLiveData = MutableLiveData<Countries>()
+    private val _currentCountryLiveData = MutableLiveData<Country>()
 
-    private val apiCountries = ApiCountry.create().getCountries()
-
-    init {
+    fun getCountries() {
         viewModelScope.launch(Dispatchers.IO) {
-            apiCountries.enqueue(object : Callback<Countries> {
+            apiCountry.getCountries().enqueue(object : Callback<Countries> {
                 override fun onResponse(
                     call: Call<Countries>,
                     response: retrofit2.Response<Countries>
                 ) {
-                    countriesLiveData.value = response.body()
-                    currentCountryLiveData.value = response.body()?.first()
+                    _countriesLiveData.value = response.body()
+                    _currentCountryLiveData.value = response.body()?.first()
                 }
 
                 override fun onFailure(call: Call<Countries>, t: Throwable) {
@@ -36,7 +34,11 @@ class CountryViewModel : ViewModel() {
         }
     }
 
-    fun setCurrentCountry(country: Country) {
-        currentCountryLiveData.value = country
+    fun getCountriesLiveData(): LiveData<Countries> = _countriesLiveData
+
+    fun getCurrentCountryLiveData(): LiveData<Country> = _currentCountryLiveData
+
+    fun setCurrentCountryLiveData(country: Country) {
+        _currentCountryLiveData.value = country
     }
 }

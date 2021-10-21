@@ -7,18 +7,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import by.dzrvnsk.smartcountries.R
 import by.dzrvnsk.smartcountries.databinding.FragmentDetailsBinding
 import by.dzrvnsk.smartcountries.model.CountryViewModel
 import com.bumptech.glide.Glide
+import org.koin.android.viewmodel.ext.android.sharedViewModel
 
 class DetailsFragment : Fragment() {
 
     private var _binding: FragmentDetailsBinding? = null
     private val binding get() = _binding!!
 
-    private val countriesViewModel: CountryViewModel by activityViewModels()
+    private val countriesViewModel: CountryViewModel by sharedViewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,7 +32,7 @@ class DetailsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.apply {
-            countriesViewModel.currentCountryLiveData.observe(viewLifecycleOwner, { country ->
+            countriesViewModel.getCurrentCountryLiveData().observe(viewLifecycleOwner, { country ->
                 Glide.with(requireContext())
                     .load(country.flags.png)
                     .into(ivCountryFlag)

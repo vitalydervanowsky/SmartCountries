@@ -1,11 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="@dimen/small_offset"
+    android:layout_marginBottom="@dimen/small_offset"
+    android:orientation="vertical"
     tools:context=".fragments.ListFragment">
+
+    <SearchView
+        android:id="@+id/search_country"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/container" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_list"
@@ -13,4 +22,4 @@
         android:layout_height="match_parent"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
-</FrameLayout>
+</LinearLayout>
