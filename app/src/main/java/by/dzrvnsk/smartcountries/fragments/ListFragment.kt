@@ -7,20 +7,26 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import by.dzrvnsk.smartcountries.R
 import by.dzrvnsk.smartcountries.adapter.CountryAdapter
 import by.dzrvnsk.smartcountries.databinding.FragmentListBinding
 import by.dzrvnsk.smartcountries.model.CountryViewModel
+import org.koin.android.viewmodel.ext.android.sharedViewModel
 
 class ListFragment : Fragment() {
 
     private var _binding: FragmentListBinding? = null
     private val binding get() = _binding!!
 
-    private val countriesViewModel: CountryViewModel by activityViewModels()
+    private val countriesViewModel: CountryViewModel by sharedViewModel()
     private val sharedPrefs: SharedPreferences by lazy {
         requireActivity().getSharedPreferences("RANDOM_COUNTRY", Context.MODE_PRIVATE)
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        // one time network request
+        countriesViewModel.getCountries()
     }
 
     override fun onCreateView(
@@ -34,9 +40,9 @@ class ListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        countriesViewModel.countriesLiveData.observe(viewLifecycleOwner, {
+        countriesViewModel.getCountriesLiveData().observe(viewLifecycleOwner, {
             binding.rvList.adapter = CountryAdapter(it) { currentCountry ->
-                countriesViewModel.setCurrentCountry(currentCountry)
+                countriesViewModel.setCurrentCountryLiveData(currentCountry)
                 parentFragmentManager.beginTransaction()
                     .setCustomAnimations(
                         R.anim.slide_in_right,
@@ -50,7 +56,7 @@ class ListFragment : Fragment() {
             }
         })
 
-        countriesViewModel.currentCountryLiveData.observe(viewLifecycleOwner, {
+        countriesViewModel.getCurrentCountryLiveData().observe(viewLifecycleOwner, {
             sharedPrefs.edit()
                 .putString("RANDOM_COUNTRY_NAME", it.name.common)
                 .putString("RANDOM_COUNTRY_FLAG", it.flags.png)

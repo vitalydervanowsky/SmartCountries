@@ -8,7 +8,6 @@ import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import by.dzrvnsk.smartcountries.database.User
-import by.dzrvnsk.smartcountries.database.UserDatabase
 import by.dzrvnsk.smartcountries.database.UserRepository
 import by.dzrvnsk.smartcountries.databinding.FragmentRegisterBinding
 import io.reactivex.Observable
@@ -18,6 +17,7 @@ import io.reactivex.schedulers.Schedulers
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import org.koin.android.ext.android.inject
 
 class RegisterFragment : Fragment() {
 
@@ -26,6 +26,7 @@ class RegisterFragment : Fragment() {
 
     private val compositeDisposable = CompositeDisposable()
     private val scopeIO = CoroutineScope(Dispatchers.IO)
+    private val userRepository: UserRepository by inject()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -77,9 +78,7 @@ class RegisterFragment : Fragment() {
     }
 
     private fun register(login: String, password: String) = scopeIO.launch {
-        val userDao = UserDatabase.getDatabase(requireContext()).userDao()
-        val repository = UserRepository(userDao)
-        repository.registerUser(User(login, password))
+        userRepository.registerUser(User(login, password))
         activity?.runOnUiThread {
             Toast.makeText(
                 requireContext(),
