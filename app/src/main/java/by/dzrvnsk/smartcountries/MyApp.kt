@@ -2,6 +2,7 @@ package by.dzrvnsk.smartcountries
 
 import android.app.Application
 import android.content.Context
+import by.dzrvnsk.smartcountries.module.databaseModule
 import by.dzrvnsk.smartcountries.module.networkModule
 import by.dzrvnsk.smartcountries.module.viewModelModule
 import org.koin.android.ext.android.startKoin
@@ -14,7 +15,14 @@ class MyApp : Application() {
         super.onCreate()
         context = this
 
-        startKoin(this, listOf(networkModule, viewModelModule))
+        startKoin(
+            this,
+            listOf(
+                networkModule,
+                viewModelModule,
+                databaseModule
+            )
+        )
     }
 
     fun getContext(): Context? {

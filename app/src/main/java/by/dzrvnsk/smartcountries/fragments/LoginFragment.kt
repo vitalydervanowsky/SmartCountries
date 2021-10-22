@@ -10,7 +10,6 @@ import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import by.dzrvnsk.smartcountries.R
-import by.dzrvnsk.smartcountries.database.UserDatabase
 import by.dzrvnsk.smartcountries.database.UserRepository
 import by.dzrvnsk.smartcountries.databinding.FragmentLoginBinding
 import io.reactivex.Observable
@@ -20,6 +19,7 @@ import io.reactivex.schedulers.Schedulers
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import org.koin.android.ext.android.inject
 
 class LoginFragment : Fragment() {
 
@@ -31,6 +31,7 @@ class LoginFragment : Fragment() {
     private val sharedPrefs: SharedPreferences by lazy {
         requireActivity().getSharedPreferences("LAST_LOGIN", Context.MODE_PRIVATE)
     }
+    private val userRepository: UserRepository by inject()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -93,9 +94,7 @@ class LoginFragment : Fragment() {
     }
 
     private fun login(login: String, password: String) = scopeIO.launch {
-        val userDao = UserDatabase.getDatabase(requireContext()).userDao()
-        val repository = UserRepository(userDao)
-        val user = repository.loginUser(login, password)
+        val user = userRepository.loginUser(login, password)
         activity?.runOnUiThread {
             if (user != null) {
                 sharedPrefs.edit()
