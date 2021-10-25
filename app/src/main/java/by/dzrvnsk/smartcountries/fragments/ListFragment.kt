@@ -6,6 +6,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
+import android.widget.SearchView
 import androidx.fragment.app.Fragment
 import by.dzrvnsk.smartcountries.R
 import by.dzrvnsk.smartcountries.adapter.CountryAdapter
@@ -23,12 +25,6 @@ class ListFragment : Fragment() {
         requireActivity().getSharedPreferences("RANDOM_COUNTRY", Context.MODE_PRIVATE)
     }
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        // one time network request
-        countriesViewModel.getCountries()
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -40,8 +36,11 @@ class ListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        var adapter: CountryAdapter? = null
+
+        countriesViewModel.getCountries()
         countriesViewModel.getCountriesLiveData().observe(viewLifecycleOwner, {
-            binding.rvList.adapter = CountryAdapter(it) { currentCountry ->
+            adapter = CountryAdapter(it) { currentCountry ->
                 countriesViewModel.setCurrentCountryLiveData(currentCountry)
                 parentFragmentManager.beginTransaction()
                     .setCustomAnimations(
@@ -54,6 +53,11 @@ class ListFragment : Fragment() {
                     .replace(R.id.container, DetailsFragment())
                     .commit()
             }
+            binding.apply {
+                rvList.adapter = adapter
+                searchCountry.isIconified = true
+                searchCountry.imeOptions = EditorInfo.IME_ACTION_DONE
+            }
         })
 
         countriesViewModel.getCurrentCountryLiveData().observe(viewLifecycleOwner, {
@@ -61,6 +65,17 @@ class ListFragment : Fragment() {
                 .putString("RANDOM_COUNTRY_NAME", it.name.common)
                 .putString("RANDOM_COUNTRY_FLAG", it.flags.png)
                 .apply()
+        })
+
+        binding.searchCountry.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(query: String): Boolean {
+                adapter?.filter?.filter(query)
+                return false
+            }
         })
     }
 
