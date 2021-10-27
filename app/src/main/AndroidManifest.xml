@@ -38,6 +38,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <service
+            android:name=".service.ReminderService"
+            android:icon="@drawable/ic_reminder_set"
+            android:label="@string/set_reminder" />
     </application>
 
 </manifest>

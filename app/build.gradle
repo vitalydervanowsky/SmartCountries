@@ -103,6 +103,10 @@ dependencies {
     implementation "org.koin:koin-android-viewmodel:$koin_version"
     implementation "org.koin:koin-androidx-scope:$koin_version"
 
+    // WorkManager: Kotlin + coroutines
+    def work_version = "2.7.0"
+    implementation "androidx.work:work-runtime-ktx:$work_version"
+
     // Testing
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
