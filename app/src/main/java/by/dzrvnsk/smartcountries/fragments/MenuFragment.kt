@@ -1,5 +1,7 @@
 package by.dzrvnsk.smartcountries.fragments
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +14,9 @@ class MenuFragment : Fragment() {
 
     private var _binding: FragmentMenuBinding? = null
     private val binding get() = _binding!!
+    private val sharedPrefs: SharedPreferences by lazy {
+        requireActivity().getSharedPreferences("LAST_LOGIN", Context.MODE_PRIVATE)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,17 +43,34 @@ class MenuFragment : Fragment() {
                     .commit()
             }
 
-            btnTest.setOnClickListener {
-                parentFragmentManager.beginTransaction()
-                    .setCustomAnimations(
-                        R.anim.slide_in_bottom,
-                        R.anim.fade_out,
-                        R.anim.fade_in,
-                        R.anim.slide_out_bottom
-                    )
-                    .addToBackStack(null)
-                    .replace(R.id.container, LoginFragment())
-                    .commit()
+            val lastLogin = sharedPrefs.getString("LAST_USER_NAME", "")
+
+            if (lastLogin?.length!! > 0) {
+                btnTest.setOnClickListener {
+                    parentFragmentManager.beginTransaction()
+                        .setCustomAnimations(
+                            R.anim.slide_in_bottom,
+                            R.anim.fade_out,
+                            R.anim.fade_in,
+                            R.anim.slide_out_bottom
+                        )
+                        .addToBackStack(null)
+                        .replace(R.id.container, HelloFragment())
+                        .commit()
+                }
+            } else {
+                btnTest.setOnClickListener {
+                    parentFragmentManager.beginTransaction()
+                        .setCustomAnimations(
+                            R.anim.slide_in_bottom,
+                            R.anim.fade_out,
+                            R.anim.fade_in,
+                            R.anim.slide_out_bottom
+                        )
+                        .addToBackStack(null)
+                        .replace(R.id.container, LoginFragment())
+                        .commit()
+                }
             }
         }
     }

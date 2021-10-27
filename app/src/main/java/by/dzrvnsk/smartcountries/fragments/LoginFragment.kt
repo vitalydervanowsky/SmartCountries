@@ -27,7 +27,6 @@ class LoginFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val compositeDisposable = CompositeDisposable()
-    private val scopeIO = CoroutineScope(Dispatchers.IO)
     private val sharedPrefs: SharedPreferences by lazy {
         requireActivity().getSharedPreferences("LAST_LOGIN", Context.MODE_PRIVATE)
     }
@@ -38,9 +37,6 @@ class LoginFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentLoginBinding.inflate(inflater, container, false)
-
-        binding.editLoginLogin.setText(sharedPrefs.getString("LAST_USER_NAME", ""))
-
         return binding.root
     }
 
@@ -93,7 +89,7 @@ class LoginFragment : Fragment() {
         }
     }
 
-    private fun login(login: String, password: String) = scopeIO.launch {
+    private fun login(login: String, password: String) = CoroutineScope(Dispatchers.IO).launch {
         val user = userRepository.loginUser(login, password)
         activity?.runOnUiThread {
             if (user != null) {
@@ -101,8 +97,7 @@ class LoginFragment : Fragment() {
                     .putString("LAST_USER_NAME", login)
                     .apply()
                 parentFragmentManager.beginTransaction()
-                    .addToBackStack(null)
-                    .replace(R.id.container, ListFragment())
+                    .replace(R.id.container, HelloFragment())
                     .commit()
             } else {
                 Toast.makeText(
