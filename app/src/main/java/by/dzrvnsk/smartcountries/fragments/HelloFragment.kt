@@ -51,22 +51,35 @@ class HelloFragment : Fragment() {
                 BIND_AUTO_CREATE
             )
 
-
             val helloText =
                 getString(R.string.say_hello) + sharedPrefs.getString("LAST_USER_NAME", "") + "!"
             tvHello.text = helloText
-            var lastScores = sharedPrefs.getInt("LAST_USERS_SCORES", 0).toString()
-//            if (lastScores.toInt() == 0) {
-//                tvLastScores.visibility = View.GONE
-//            }
+            var lastScores = sharedPrefs.getInt("LAST_GAME_SCORES", 0).toString()
+            if (lastScores.toInt() == 0) {
+                tvLastScores.visibility = View.GONE
+            }
             lastScores = getString(R.string.last_scores) + lastScores
             tvLastScores.text = lastScores
 
-            btnStartQuiz.setOnClickListener { }
+            btnStartQuiz.setOnClickListener {
+                parentFragmentManager.beginTransaction()
+                    .setCustomAnimations(
+                        R.anim.slide_in_bottom,
+                        R.anim.fade_out,
+                        R.anim.fade_in,
+                        R.anim.slide_out_bottom
+                    )
+                    .replace(R.id.container, QuizFragment())
+                    .commit()
+            }
 
             btnShowScores.setOnClickListener { }
 
             btnLogout.setOnClickListener {
+                sharedPrefs.edit()
+                    .putString("LAST_USER_NAME", "")
+                    .putInt("LAST_GAME_SCORES", 0)
+                    .apply()
                 parentFragmentManager.beginTransaction()
                     .setCustomAnimations(
                         R.anim.slide_in_bottom,

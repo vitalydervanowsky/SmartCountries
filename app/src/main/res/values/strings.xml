@@ -18,4 +18,7 @@
     <string name="set_reminder_label">Set reminder to test your knowledge periodically:</string>
     <string name="set_reminder">Set reminder</string>
     <string name="disable_reminder">Disable reminder</string>
+    <string name="restart_quiz">Restart Quiz</string>
+    <string name="back_to_menu">Back to Menu</string>
+    <string name="quiz_question_flag">Which country flag is shown in the picture?</string>
 </resources>

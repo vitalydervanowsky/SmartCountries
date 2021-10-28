@@ -15,7 +15,7 @@ class MainActivity : AppCompatActivity() {
 
         if (supportFragmentManager.findFragmentById(R.id.container) == null)
             supportFragmentManager.beginTransaction()
-                .add(binding.container.id, MenuFragment())
+                .replace(binding.container.id, MenuFragment())
                 .commit()
     }
 }

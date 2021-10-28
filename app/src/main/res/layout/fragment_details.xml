@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/light_gray"
     android:padding="@dimen/small_offset"
     tools:context=".fragments.DetailsFragment">
 
@@ -14,8 +13,9 @@
 
         <ImageView
             android:id="@+id/iv_country_flag"
-            android:layout_width="match_parent"
+            android:layout_width="300dp"
             android:layout_height="200dp"
+            android:background="@drawable/imageview_border"
             android:contentDescription="@string/ivCountryFlagContentDescription"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
