@@ -73,7 +73,12 @@ class HelloFragment : Fragment() {
                     .commit()
             }
 
-            btnShowScores.setOnClickListener { }
+            btnShowScores.setOnClickListener {
+                parentFragmentManager.beginTransaction()
+                    .addToBackStack(null)
+                    .replace(R.id.container, ResultsFragment())
+                    .commit()
+            }
 
             btnLogout.setOnClickListener {
                 sharedPrefs.edit()

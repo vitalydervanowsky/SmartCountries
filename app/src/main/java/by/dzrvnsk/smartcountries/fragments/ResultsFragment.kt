@@ -30,6 +30,12 @@ class ResultsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val scores = sharedPrefs.getInt("LAST_GAME_SCORES", 0)
         binding.apply {
+            val resultText = when (scores) {
+                in 8..10 -> "You're awesome!"
+                in 4..7 -> "Not Good, not bad!"
+                else -> "You can better!"
+            }
+            tvLastGameResults.text = resultText
             tvLastGameScores.text = scores.toString()
 
             btnRestart.setOnClickListener {
