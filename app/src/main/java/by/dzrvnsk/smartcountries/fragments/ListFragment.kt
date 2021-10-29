@@ -38,7 +38,7 @@ class ListFragment : Fragment() {
 
         var adapter: CountryAdapter? = null
 
-        countriesViewModel.getCountries()
+        countriesViewModel.fetchCountries()
         countriesViewModel.getCountriesLiveData().observe(viewLifecycleOwner, {
             adapter = CountryAdapter(it) { currentCountry ->
                 countriesViewModel.setCurrentCountryLiveData(currentCountry)
