@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="@dimen/great_offset"
+    android:paddingTop="@dimen/great_offset"
+    android:paddingStart="@dimen/great_offset"
+    android:paddingEnd="@dimen/great_offset"
     tools:context=".fragments.QuizFragment">
 
     <TextView
@@ -82,5 +84,15 @@
         android:layout_marginTop="@dimen/medium_offset"
         app:layout_constraintTop_toBottomOf="@id/btn_option3"
         tools:text="Option4" />
+
+    <Button
+        android:id="@+id/btn_next_question"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/next_question"
+        app:layout_constraintTop_toBottomOf="@id/btn_option4"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:visibility="gone"
+        tools:visibility="visible"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
