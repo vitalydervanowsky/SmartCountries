@@ -11,7 +11,9 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import by.dzrvnsk.smartcountries.R
 import by.dzrvnsk.smartcountries.databinding.FragmentHelloBinding
+import by.dzrvnsk.smartcountries.model.CountryViewModel
 import by.dzrvnsk.smartcountries.service.ReminderService
+import org.koin.android.viewmodel.ext.android.sharedViewModel
 
 class HelloFragment : Fragment() {
 
@@ -21,6 +23,7 @@ class HelloFragment : Fragment() {
         requireActivity().getSharedPreferences("LAST_LOGIN", Context.MODE_PRIVATE)
     }
     private var reminderService: ReminderService? = ReminderService()
+    private val countryViewModel: CountryViewModel by sharedViewModel()
 
     private val connection = object : ServiceConnection {
         override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
@@ -38,6 +41,7 @@ class HelloFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentHelloBinding.inflate(layoutInflater, container, false)
+        countryViewModel.fetchCountries()
         return binding.root
     }
 

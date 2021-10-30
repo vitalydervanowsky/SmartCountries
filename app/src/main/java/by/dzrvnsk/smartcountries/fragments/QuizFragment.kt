@@ -2,12 +2,12 @@ package by.dzrvnsk.smartcountries.fragments
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.graphics.Color
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import androidx.fragment.app.Fragment
 import by.dzrvnsk.smartcountries.R
 import by.dzrvnsk.smartcountries.databinding.FragmentQuizBinding
 import by.dzrvnsk.smartcountries.model.CountryViewModel
@@ -22,6 +22,8 @@ class QuizFragment : Fragment() {
     private var _binding: FragmentQuizBinding? = null
     private val binding get() = _binding!!
     private val countryViewModel: CountryViewModel by sharedViewModel()
+    private val size = 10
+    private var attempt = 1
     private var scores = 0
     private var position = 0
     private var questions = listOf<Question>()
@@ -30,6 +32,9 @@ class QuizFragment : Fragment() {
         requireActivity().getSharedPreferences("LAST_LOGIN", Context.MODE_PRIVATE)
     }
     private val usedCountries = mutableListOf<Int>()
+    private val colorCorrect = Color.rgb(0, 105, 0)
+    private val colorIncorrect = Color.rgb(176, 20, 65)
+    private val colorDefault = Color.rgb(98, 0, 238)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -42,7 +47,6 @@ class QuizFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        countryViewModel.fetchCountries()
         countryViewModel.getCountriesLiveData().observe(viewLifecycleOwner, {
             countries = it
             questions = getQuestions()
@@ -51,46 +55,64 @@ class QuizFragment : Fragment() {
 
             binding.apply {
                 btnOption1.setOnClickListener {
-                    checkAnswer(questions[position].answer, questions[position].option1)
+                    checkAnswer(questions[position].option1)
                 }
 
                 btnOption2.setOnClickListener {
-                    checkAnswer(questions[position].answer, questions[position].option2)
+                    checkAnswer(questions[position].option2)
                 }
 
                 btnOption3.setOnClickListener {
-                    checkAnswer(questions[position].answer, questions[position].option3)
+                    checkAnswer(questions[position].option3)
                 }
 
                 btnOption4.setOnClickListener {
-                    checkAnswer(questions[position].answer, questions[position].option4)
+                    checkAnswer(questions[position].option4)
                 }
 
+                btnNextQuestion.setOnClickListener {
+                    if (++position < questions.size) {
+                        setDataToViews()
+                    } else {
+                        sharedPrefs.edit()
+                            .putInt("LAST_GAME_SCORES", scores)
+                            .apply()
+                        parentFragmentManager.beginTransaction()
+                            .replace(R.id.container, ResultsFragment())
+                            .commit()
+                    }
+                }
             }
         })
     }
 
-    private fun checkAnswer(answer: Country, option: Country) {
-        if (answer.name.common == option.name.common) {
+    private fun checkAnswer(option: Country) {
+        if (questions[position].answer == option && attempt == 1) {
             scores++
-            Toast.makeText(requireContext(), "Correct!\nIt was ${answer.name.common}", Toast.LENGTH_SHORT).show()
-        } else {
-            Toast.makeText(requireContext(), "Incorrect!\nIt was ${answer.name.common}", Toast.LENGTH_SHORT).show()
         }
-        if (++position < questions.size) {
-            setDataToViews()
-        } else {
-            sharedPrefs.edit()
-                .putInt("LAST_GAME_SCORES", scores)
-                .apply()
-            parentFragmentManager.beginTransaction()
-                .replace(R.id.container, ResultsFragment())
-                .commit()
+        attempt++
+
+        binding.apply {
+            val scoresText = "Scores: $scores"
+            tvScores.text = scoresText
+            btnNextQuestion.visibility = View.VISIBLE
+            btnOption1.setBackgroundColor(colorIncorrect)
+            btnOption2.setBackgroundColor(colorIncorrect)
+            btnOption3.setBackgroundColor(colorIncorrect)
+            btnOption4.setBackgroundColor(colorIncorrect)
+            when (questions[position].answer) {
+                questions[position].option1 -> btnOption1.setBackgroundColor(colorCorrect)
+                questions[position].option2 -> btnOption2.setBackgroundColor(colorCorrect)
+                questions[position].option3 -> btnOption3.setBackgroundColor(colorCorrect)
+                questions[position].option4 -> btnOption4.setBackgroundColor(colorCorrect)
+            }
         }
     }
 
     private fun setDataToViews() {
         binding.apply {
+            attempt = 1
+            btnNextQuestion.visibility = View.GONE
             val scoresText = "Scores: $scores"
             tvScores.text = scoresText
             val positionText = "Question: ${position + 1}/${questions.size}"
@@ -103,12 +125,16 @@ class QuizFragment : Fragment() {
             btnOption2.text = question.option2.name.common
             btnOption3.text = question.option3.name.common
             btnOption4.text = question.option4.name.common
+            btnOption1.setBackgroundColor(colorDefault)
+            btnOption2.setBackgroundColor(colorDefault)
+            btnOption3.setBackgroundColor(colorDefault)
+            btnOption4.setBackgroundColor(colorDefault)
         }
     }
 
     private fun getQuestions(): List<Question> {
         val listOfQuestions = mutableListOf<Question>()
-        for (i in 0..9) {
+        for (i in 0 until size) {
             usedCountries.clear()
             val country1 = getRandomCountry()
             val country2 = getRandomCountry()

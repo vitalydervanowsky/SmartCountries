@@ -21,4 +21,5 @@
     <string name="restart_quiz">Restart Quiz</string>
     <string name="back_to_menu">Back to Menu</string>
     <string name="quiz_question_flag">Which country flag is shown in the picture?</string>
+    <string name="next_question">Next</string>
 </resources>
