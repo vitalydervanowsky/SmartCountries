@@ -26,8 +26,6 @@ class LoginFragment : Fragment() {
 
     private var _binding: FragmentLoginBinding? = null
     private val binding get() = _binding!!
-
-    private val compositeDisposable = CompositeDisposable()
     private val sharedPrefs: SharedPreferences by lazy {
         requireActivity().getSharedPreferences(LAST_LOGIN, Context.MODE_PRIVATE)
     }
@@ -43,15 +41,28 @@ class LoginFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.apply {
-            btnLogin.isEnabled = false
 
+        initViews()
+        initListeners()
+    }
+
+    private fun initViews() {
+        enableBtnLogin()
+    }
+
+    private fun initListeners() {
+        binding.apply {
             btnLogin.setOnClickListener {
                 login(editLoginLogin.text.toString(), editLoginPassword.text.toString())
             }
             btnRegister.setOnClickListener {
                 showRegisterFragment()
             }
+        }
+    }
+
+    private fun enableBtnLogin() {
+        binding.apply {
             val loginObservable = Observable.create<Boolean> { emitter ->
                 editLoginLogin.addTextChangedListener {
                     if (!emitter.isDisposed)
@@ -64,7 +75,7 @@ class LoginFragment : Fragment() {
                         emitter.onNext(it.toString().isNotEmpty())
                 }
             }
-            compositeDisposable.add(Observable
+            CompositeDisposable().add(Observable
                 .combineLatest(
                     loginObservable,
                     passwordObservable,
@@ -98,12 +109,8 @@ class LoginFragment : Fragment() {
         val user = userRepository.loginUser(login, password)
         activity?.runOnUiThread {
             if (user != null) {
-                sharedPrefs.edit()
-                    .putString(LAST_LOGIN, login)
-                    .apply()
-                parentFragmentManager.beginTransaction()
-                    .replace(R.id.container, HelloFragment())
-                    .commit()
+                saveToSharedPrefs(login)
+                showHelloFragment()
             } else {
                 Toast.makeText(
                     requireContext(),
@@ -112,6 +119,18 @@ class LoginFragment : Fragment() {
                 ).show()
             }
         }
+    }
+
+    private fun saveToSharedPrefs(login: String) {
+        sharedPrefs.edit()
+            .putString(LAST_LOGIN, login)
+            .apply()
+    }
+
+    private fun showHelloFragment() {
+        parentFragmentManager.beginTransaction()
+            .replace(R.id.container, HelloFragment())
+            .commit()
     }
 
     override fun onDestroy() {

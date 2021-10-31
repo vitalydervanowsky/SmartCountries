@@ -6,18 +6,17 @@ import android.widget.Filter
 import android.widget.Filterable
 import androidx.recyclerview.widget.RecyclerView
 import by.dzrvnsk.smartcountries.databinding.ItemCountryBinding
-import by.dzrvnsk.smartcountries.response.Country
+import by.dzrvnsk.smartcountries.model.response.Country
 import com.bumptech.glide.Glide
 import java.util.*
-import kotlin.collections.ArrayList
 
 class CountryAdapter(
-    private val data: ArrayList<Country>,
-    private val delegate: (Country) -> Unit
+    private val countries: ArrayList<Country>,
+    private val listener: (Country) -> Unit
 ) : RecyclerView.Adapter<CountryViewHolder>(),
     Filterable {
 
-    private val dataFull = data.toMutableList()
+    private val countriesFull = countries.toMutableList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CountryViewHolder {
         val binding = ItemCountryBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -25,10 +24,10 @@ class CountryAdapter(
     }
 
     override fun onBindViewHolder(holder: CountryViewHolder, position: Int) {
-        holder.bind(data[position], delegate)
+        holder.bind(countries[position], listener)
     }
 
-    override fun getItemCount(): Int = data.size
+    override fun getItemCount(): Int = countries.size
 
     override fun getFilter(): Filter {
         return object : Filter() {
@@ -36,16 +35,15 @@ class CountryAdapter(
                 val filteredList = arrayListOf<Country>()
 
                 if (constraint == null || constraint.isEmpty()) {
-                    filteredList.addAll(dataFull as ArrayList<Country>)
+                    filteredList.addAll(countriesFull as ArrayList<Country>)
                 } else {
                     val filterPattern: String =
                         constraint.toString().lowercase(Locale.getDefault()).trim()
 
-                    dataFull.forEach { country ->
-                        if (country.name.common.lowercase(Locale.getDefault())
-                                .contains(filterPattern)
-                        )
+                    countriesFull.forEach { country ->
+                        if (countryNameContains(country, filterPattern)) {
                             filteredList.add(country)
+                        }
                     }
                 }
                 val results = FilterResults()
@@ -53,9 +51,13 @@ class CountryAdapter(
                 return results
             }
 
+            private fun countryNameContains(country: Country, filterPattern: String): Boolean {
+                return country.name.common.lowercase(Locale.getDefault()).contains(filterPattern)
+            }
+
             override fun publishResults(constraint: CharSequence?, results: FilterResults) {
-                data.clear()
-                data.addAll(results.values as ArrayList<Country>)
+                countries.clear()
+                countries.addAll(results.values as ArrayList<Country>)
                 notifyDataSetChanged()
             }
         }
@@ -65,7 +67,7 @@ class CountryAdapter(
 class CountryViewHolder(private val binding: ItemCountryBinding) :
     RecyclerView.ViewHolder(binding.root) {
 
-    fun bind(country: Country, delegate: (Country) -> Unit) {
+    fun bind(country: Country, listener: (Country) -> Unit) {
         binding.apply {
             Glide.with(itemView)
                 .load(country.flags.png)
@@ -74,7 +76,7 @@ class CountryViewHolder(private val binding: ItemCountryBinding) :
             tvCountryRegion.text = country.region
             tvCountrySubregion.text = country.subregion
             itemView.setOnClickListener {
-                delegate(country)
+                listener(country)
             }
         }
     }

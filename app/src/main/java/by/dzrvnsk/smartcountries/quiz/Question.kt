@@ -1,6 +1,6 @@
 package by.dzrvnsk.smartcountries.quiz
 
-import by.dzrvnsk.smartcountries.response.Country
+import by.dzrvnsk.smartcountries.model.response.Country
 
 data class Question(
     val answer: Country,

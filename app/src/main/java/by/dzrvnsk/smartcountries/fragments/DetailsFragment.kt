@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import by.dzrvnsk.smartcountries.R
 import by.dzrvnsk.smartcountries.databinding.FragmentDetailsBinding
-import by.dzrvnsk.smartcountries.model.CountryViewModel
+import by.dzrvnsk.smartcountries.viewModel.CountryViewModel
 import com.bumptech.glide.Glide
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 
@@ -17,8 +17,7 @@ class DetailsFragment : Fragment() {
 
     private var _binding: FragmentDetailsBinding? = null
     private val binding get() = _binding!!
-
-    private val countriesViewModel: CountryViewModel by sharedViewModel()
+    private val countryViewModel: CountryViewModel by sharedViewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,8 +30,12 @@ class DetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.apply {
-            countriesViewModel.getCurrentCountryLiveData().observe(viewLifecycleOwner, { country ->
+        initViews()
+    }
+
+    private fun initViews() {
+        countryViewModel.getCurrentCountryLiveData().observe(viewLifecycleOwner, { country ->
+            binding.apply {
                 Glide.with(requireContext())
                     .load(country.flags.png)
                     .into(ivCountryFlag)
@@ -43,31 +46,31 @@ class DetailsFragment : Fragment() {
                     val mapIntent = Intent(Intent.ACTION_VIEW, intentUri)
                     startActivity(mapIntent)
                 }
-                if (country.capital != null) {
-                    tvCountryCapital.text = country.capital.first()
-                } else {
-                    tvCountryCapital.visibility = View.GONE
+                country.capital.let {
+                    tvCountryCapital.text = it.first()
+                    tvCountryCapital.visibility = View.VISIBLE
                 }
                 tvCountryCapital.setOnClickListener {
-                    val gmmIntentUri =
-                        Uri.parse("geo:${country.capitalInfo.latlng[0]},${country.capitalInfo.latlng[1]}?z=11")
+                    val gmmIntentUri = Uri.parse(
+                        "geo:${country.capitalInfo.latlng[0]},${country.capitalInfo.latlng[1]}?z=11"
+                    )
                     val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
                     mapIntent.setPackage("com.google.android.apps.maps")
                     startActivity(mapIntent)
-
                 }
                 val region = "${country.region}, ${country.subregion}"
                 tvCountryRegion.text = region
-                val area = "Area: ${separateDigits(country.area.toInt())}"
-                tvCountryArea.text = area
-                val population = "Population: ${separateDigits(country.population)}"
-                tvCountryPopulation.text = population
-            })
+                val areaText = getString(R.string.area_text) + separateDigits(country.area.toInt())
+                tvCountryArea.text = areaText
+                val populationText =
+                    getString(R.string.population_text) + separateDigits(country.population)
+                tvCountryPopulation.text = populationText
+            }
+        })
 
-            parentFragmentManager.beginTransaction()
-                .add(R.id.map_container, MapsFragment())
-                .commit()
-        }
+        parentFragmentManager.beginTransaction()
+            .add(R.id.map_container, MapsFragment())
+            .commit()
     }
 
     private fun separateDigits(int: Int): String {

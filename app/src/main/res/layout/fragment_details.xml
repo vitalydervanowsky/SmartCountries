@@ -51,10 +51,12 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/medium_offset"
             android:textSize="@dimen/big_text_size"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_country_name_official"
-            tools:text="Capital" />
+            tools:text="Capital"
+            tools:visibility="visible" />
 
         <TextView
             android:id="@+id/tv_country_region"

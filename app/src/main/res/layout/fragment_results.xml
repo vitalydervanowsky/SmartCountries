@@ -4,58 +4,53 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="@dimen/big_offset"
+    android:padding="@dimen/great_offset"
     tools:context=".fragments.ResultsFragment">
 
     <TextView
         android:id="@+id/tv_last_game_results"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/great_offset"
         android:textSize="@dimen/title_size"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        tools:text="You're awesome!"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="You're awesome!" />
 
     <TextView
         android:id="@+id/tv_last_game_scores"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/big_offset"
+        android:layout_marginTop="@dimen/great_offset"
         android:textSize="@dimen/title_size"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_last_game_results"
         tools:text="10" />
 
-    <LinearLayout
-        android:id="@+id/layout_play_buttons"
-        android:layout_width="match_parent"
+    <Button
+        android:id="@+id/btn_restart"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/big_offset"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="@dimen/great_offset"
+        android:layout_marginEnd="@dimen/medium_offset"
+        android:backgroundTint="@color/purple_700"
+        android:paddingVertical="@dimen/great_offset"
+        android:text="@string/restart_quiz"
+        app:layout_constraintEnd_toStartOf="@id/btn_go_back"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_last_game_scores">
+        app:layout_constraintTop_toBottomOf="@id/tv_last_game_scores" />
 
-        <Button
-            android:id="@+id/btn_restart"
-            android:layout_width="0dp"
-            android:layout_height="128dp"
-            android:layout_marginEnd="@dimen/medium_offset"
-            android:layout_weight="1"
-            android:backgroundTint="@color/purple_700"
-            android:text="@string/restart_quiz" />
-
-        <Button
-            android:id="@+id/btn_go_back"
-            android:layout_width="0dp"
-            android:layout_height="128dp"
-            android:layout_marginStart="@dimen/medium_offset"
-            android:layout_weight="1"
-            android:text="@string/back_to_menu" />
-
-    </LinearLayout>
+    <Button
+        android:id="@+id/btn_go_back"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/medium_offset"
+        android:layout_marginTop="@dimen/great_offset"
+        android:paddingVertical="@dimen/great_offset"
+        android:text="@string/back_to_menu"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/btn_restart"
+        app:layout_constraintTop_toBottomOf="@id/tv_last_game_scores" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

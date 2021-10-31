@@ -1,5 +1,6 @@
-package by.dzrvnsk.smartcountries.response
+package by.dzrvnsk.smartcountries.model.request
 
+import by.dzrvnsk.smartcountries.model.response.Country
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Call
@@ -29,5 +30,5 @@ fun createRetrofit(): ApiCountry {
 
 interface ApiCountry {
     @GET("all/")
-    fun getCountries(): Call<Countries>
+    fun getCountries(): Call<ArrayList<Country>>
 }
