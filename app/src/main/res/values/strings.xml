@@ -29,4 +29,8 @@
     <string name="result_perfect">"You're awesome!"</string>
     <string name="result_good">"Not Good, not bad!"</string>
     <string name="result_bad">"You can better!"</string>
+    <string name="area_text">"Area: "</string>
+    <string name="population_text">"Population: "</string>
+    <string name="registration_success">" is now registered!"</string>
+    <string name="notification_message">"Tap to open SmartCountries and start testing"</string>
 </resources>

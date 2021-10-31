@@ -11,8 +11,8 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import by.dzrvnsk.smartcountries.*
 import by.dzrvnsk.smartcountries.databinding.FragmentHelloBinding
-import by.dzrvnsk.smartcountries.model.CountryViewModel
 import by.dzrvnsk.smartcountries.service.ReminderService
+import by.dzrvnsk.smartcountries.viewModel.CountryViewModel
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 
 class HelloFragment : Fragment() {
@@ -54,7 +54,7 @@ class HelloFragment : Fragment() {
             BIND_AUTO_CREATE
         )
 
-        initView()
+        initViews()
         initListeners()
     }
 
@@ -63,37 +63,33 @@ class HelloFragment : Fragment() {
             btnStartQuiz.setOnClickListener {
                 showQuizFragment()
             }
-
             btnShowScores.setOnClickListener {
                 showResultsFragment()
             }
-
             btnLogout.setOnClickListener {
                 resetSharedPrefs()
                 showLoginFragment()
             }
-
             btnSetReminder.setOnClickListener {
                 startRemindService()
             }
-
             btnDisableReminder.setOnClickListener {
                 stopReminderService()
             }
         }
     }
 
-    private fun initView() {
+    private fun initViews() {
         binding.apply {
             val helloText =
                 getString(R.string.say_hello) + sharedPrefs.getString(LAST_LOGIN, NO_NAME) + "!"
             tvHello.text = helloText
-            var lastScores = sharedPrefs.getInt(LAST_SCORES, NO_SCORES).toString()
-            if (lastScores.toInt() == NO_SCORES) {
+            val lastScores = sharedPrefs.getInt(LAST_SCORES, NO_SCORES)
+            if (lastScores == NO_SCORES) {
                 tvLastScores.visibility = View.GONE
             }
-            lastScores = getString(R.string.last_scores) + lastScores
-            tvLastScores.text = lastScores
+            val lastScoresText = getString(R.string.last_scores) + lastScores
+            tvLastScores.text = lastScoresText
         }
     }
 

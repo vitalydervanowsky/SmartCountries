@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
+import by.dzrvnsk.smartcountries.R
 import by.dzrvnsk.smartcountries.database.User
 import by.dzrvnsk.smartcountries.database.UserRepository
 import by.dzrvnsk.smartcountries.databinding.FragmentRegisterBinding
@@ -23,9 +24,6 @@ class RegisterFragment : Fragment() {
 
     private var _binding: FragmentRegisterBinding? = null
     private val binding get() = _binding!!
-
-    private val compositeDisposable = CompositeDisposable()
-    private val scopeIO = CoroutineScope(Dispatchers.IO)
     private val userRepository: UserRepository by inject()
 
     override fun onCreateView(
@@ -39,9 +37,16 @@ class RegisterFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.apply {
-            btnRegister.isEnabled = false
+        initViews()
+        initListeners()
+    }
 
+    private fun initViews() {
+        enableBtnRegister()
+    }
+
+    private fun enableBtnRegister() {
+        binding.apply {
             val emailObservable = Observable.create<Boolean> { emitter ->
                 editRegistrationLogin.addTextChangedListener {
                     if (!emitter.isDisposed)
@@ -54,7 +59,7 @@ class RegisterFragment : Fragment() {
                         emitter.onNext(it.toString().isNotEmpty())
                 }
             }
-            compositeDisposable.add(Observable
+            CompositeDisposable().add(Observable
                 .combineLatest(
                     emailObservable,
                     passwordIsNotEmptyObservable,
@@ -68,6 +73,11 @@ class RegisterFragment : Fragment() {
                     btnRegister.isEnabled = it
                 }
             )
+        }
+    }
+
+    private fun initListeners() {
+        binding.apply {
             btnRegister.setOnClickListener {
                 register(
                     editRegistrationLogin.text.toString(),
@@ -77,15 +87,11 @@ class RegisterFragment : Fragment() {
         }
     }
 
-    private fun register(login: String, password: String) = scopeIO.launch {
+    private fun register(login: String, password: String) = CoroutineScope(Dispatchers.IO).launch {
         userRepository.registerUser(User(login, password))
         activity?.runOnUiThread {
-            Toast.makeText(
-                requireContext(),
-                "$login is now registered!",
-                Toast.LENGTH_SHORT
-            )
-                .show()
+            val toastText = login + getString(R.string.registration_success)
+            Toast.makeText(requireContext(), toastText, Toast.LENGTH_SHORT).show()
             activity?.onBackPressed()
         }
     }

@@ -8,8 +8,7 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.widget.RemoteViews
-import by.dzrvnsk.smartcountries.MainActivity
-import by.dzrvnsk.smartcountries.R
+import by.dzrvnsk.smartcountries.*
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.AppWidgetTarget
 import com.bumptech.glide.request.transition.Transition
@@ -47,16 +46,16 @@ internal fun updateAppWidget(
     appWidgetManager: AppWidgetManager,
     appWidgetId: Int
 ) {
-    val sharedPrefs = context.getSharedPreferences("RANDOM_COUNTRY", Context.MODE_PRIVATE)
-    val name = sharedPrefs.getString("RANDOM_COUNTRY_NAME", "")
-    val flag = sharedPrefs.getString("RANDOM_COUNTRY_FLAG", "")
+    val sharedPrefs = context.getSharedPreferences(RANDOM_COUNTRY, Context.MODE_PRIVATE)
+    val name = sharedPrefs.getString(RANDOM_COUNTRY_NAME, NO_COUNTRY_NAME)
+    val flag = sharedPrefs.getString(RANDOM_COUNTRY_FLAG, NO_COUNTRY_FLAG)
 
     val views = RemoteViews(context.packageName, R.layout.random_country_widget)
 
-    if (name != null) {
+    if (name != NO_COUNTRY_NAME) {
         views.setTextViewText(R.id.tv_country_name, name)
     }
-    if (flag != null) {
+    if (flag != NO_COUNTRY_FLAG) {
         val awt: AppWidgetTarget = object :
             AppWidgetTarget(context.applicationContext, R.id.iv_country_flag, views, appWidgetId) {
             override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {

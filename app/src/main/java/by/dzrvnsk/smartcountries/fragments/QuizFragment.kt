@@ -6,12 +6,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import by.dzrvnsk.smartcountries.*
 import by.dzrvnsk.smartcountries.databinding.FragmentQuizBinding
-import by.dzrvnsk.smartcountries.model.CountryViewModel
+import by.dzrvnsk.smartcountries.model.response.Country
 import by.dzrvnsk.smartcountries.quiz.Question
-import by.dzrvnsk.smartcountries.response.Country
+import by.dzrvnsk.smartcountries.viewModel.CountryViewModel
 import com.bumptech.glide.Glide
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 import kotlin.random.Random
@@ -108,8 +109,8 @@ class QuizFragment : Fragment() {
             val scoresText = getString(R.string.scores_text) + scores
             tvScores.text = scoresText
             btnNextQuestion.visibility = View.VISIBLE
-            val colorIncorrect = resources.getColor(R.color.answer_incorrect)
-            val colorCorrect = resources.getColor(R.color.answer_correct)
+            val colorIncorrect = ContextCompat.getColor(requireContext(), R.color.answer_incorrect)
+            val colorCorrect = ContextCompat.getColor(requireContext(), R.color.answer_correct)
             btnOption1.setBackgroundColor(colorIncorrect)
             btnOption2.setBackgroundColor(colorIncorrect)
             btnOption3.setBackgroundColor(colorIncorrect)
@@ -139,7 +140,7 @@ class QuizFragment : Fragment() {
             btnOption2.text = question.option2.name.common
             btnOption3.text = question.option3.name.common
             btnOption4.text = question.option4.name.common
-            val colorDefault = resources.getColor(R.color.purple_500)
+            val colorDefault = ContextCompat.getColor(requireContext(), R.color.purple_500)
             btnOption1.setBackgroundColor(colorDefault)
             btnOption2.setBackgroundColor(colorDefault)
             btnOption3.setBackgroundColor(colorDefault)
@@ -167,10 +168,10 @@ class QuizFragment : Fragment() {
     }
 
     private fun getRandomCountry(): Country {
-        var number: Int
-        do {
+        var number = Random.nextInt(countries.size)
+        while (usedCountries.contains(number)) {
             number = Random.nextInt(countries.size)
-        } while (usedCountries.contains(number))
+        }
         usedCountries.add(number)
         return countries[number]
     }

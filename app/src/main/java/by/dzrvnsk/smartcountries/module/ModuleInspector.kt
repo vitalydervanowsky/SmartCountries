@@ -5,8 +5,8 @@ import androidx.room.Room
 import by.dzrvnsk.smartcountries.database.UserDao
 import by.dzrvnsk.smartcountries.database.UserDatabase
 import by.dzrvnsk.smartcountries.database.UserRepository
-import by.dzrvnsk.smartcountries.model.CountryViewModel
-import by.dzrvnsk.smartcountries.response.createRetrofit
+import by.dzrvnsk.smartcountries.model.request.createRetrofit
+import by.dzrvnsk.smartcountries.viewModel.CountryViewModel
 import org.koin.android.viewmodel.ext.koin.viewModel
 import org.koin.dsl.module.module
 
