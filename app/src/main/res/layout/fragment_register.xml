@@ -67,6 +67,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/big_offset"
         android:text="@string/register"
+        android:enabled="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_registration_password" />

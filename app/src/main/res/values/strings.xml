@@ -22,4 +22,15 @@
     <string name="back_to_menu">Back to Menu</string>
     <string name="quiz_question_flag">Which country flag is shown in the picture?</string>
     <string name="next_question">Next</string>
+    <string name="scores_text">"Scores: "</string>
+    <string name="questions_text">"Question: "</string>
+    <string name="reminder_start">"Reminder is set!"</string>
+    <string name="reminder_stop">"Reminder is disabled!"</string>
+    <string name="result_perfect">"You're awesome!"</string>
+    <string name="result_good">"Not Good, not bad!"</string>
+    <string name="result_bad">"You can better!"</string>
+    <string name="area_text">"Area: "</string>
+    <string name="population_text">"Population: "</string>
+    <string name="registration_success">" is now registered!"</string>
+    <string name="notification_message">"Tap to open SmartCountries and start testing"</string>
 </resources>

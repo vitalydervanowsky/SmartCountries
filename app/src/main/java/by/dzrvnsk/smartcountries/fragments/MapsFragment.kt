@@ -6,7 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import by.dzrvnsk.smartcountries.R
-import by.dzrvnsk.smartcountries.model.CountryViewModel
+import by.dzrvnsk.smartcountries.model.response.Country
+import by.dzrvnsk.smartcountries.viewModel.CountryViewModel
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
@@ -36,18 +37,19 @@ class MapsFragment : Fragment() {
                         .position(latLng)
                         .title(country.name.common)
                 )
-                val zoom = when (country.area.toInt()) {
-                    in 0..2000 -> 8f
-                    in 2000..10000 -> 7f
-                    in 10000..50000 -> 6f
-                    in 50000..200000 -> 5f
-                    in 200000..1000000 -> 4f
-                    in 1000000..4000000 -> 3f
-                    in 4000000..10000000 -> 2f
-                    else -> 1f
-                }
-                googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoom))
+                googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoom(country)))
             })
         }
+    }
+
+    private fun zoom(country: Country) = when (country.area.toInt()) {
+        in 0..2000 -> 8f
+        in 2000..10000 -> 7f
+        in 10000..50000 -> 6f
+        in 50000..200000 -> 5f
+        in 200000..1000000 -> 4f
+        in 1000000..4000000 -> 3f
+        in 4000000..10000000 -> 2f
+        else -> 1f
     }
 }

@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
+import by.dzrvnsk.smartcountries.LAST_LOGIN
 import by.dzrvnsk.smartcountries.R
 import by.dzrvnsk.smartcountries.database.UserRepository
 import by.dzrvnsk.smartcountries.databinding.FragmentLoginBinding
@@ -25,10 +26,8 @@ class LoginFragment : Fragment() {
 
     private var _binding: FragmentLoginBinding? = null
     private val binding get() = _binding!!
-
-    private val compositeDisposable = CompositeDisposable()
     private val sharedPrefs: SharedPreferences by lazy {
-        requireActivity().getSharedPreferences("LAST_LOGIN", Context.MODE_PRIVATE)
+        requireActivity().getSharedPreferences(LAST_LOGIN, Context.MODE_PRIVATE)
     }
     private val userRepository: UserRepository by inject()
 
@@ -42,24 +41,28 @@ class LoginFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.apply {
-            btnLogin.isEnabled = false
 
+        initViews()
+        initListeners()
+    }
+
+    private fun initViews() {
+        enableBtnLogin()
+    }
+
+    private fun initListeners() {
+        binding.apply {
             btnLogin.setOnClickListener {
                 login(editLoginLogin.text.toString(), editLoginPassword.text.toString())
             }
             btnRegister.setOnClickListener {
-                parentFragmentManager.beginTransaction()
-                    .setCustomAnimations(
-                        R.anim.slide_in_bottom,
-                        R.anim.fade_out,
-                        R.anim.fade_in,
-                        R.anim.slide_out_bottom
-                    )
-                    .addToBackStack(null)
-                    .replace(R.id.container, RegisterFragment())
-                    .commit()
+                showRegisterFragment()
             }
+        }
+    }
+
+    private fun enableBtnLogin() {
+        binding.apply {
             val loginObservable = Observable.create<Boolean> { emitter ->
                 editLoginLogin.addTextChangedListener {
                     if (!emitter.isDisposed)
@@ -72,7 +75,7 @@ class LoginFragment : Fragment() {
                         emitter.onNext(it.toString().isNotEmpty())
                 }
             }
-            compositeDisposable.add(Observable
+            CompositeDisposable().add(Observable
                 .combineLatest(
                     loginObservable,
                     passwordObservable,
@@ -89,16 +92,25 @@ class LoginFragment : Fragment() {
         }
     }
 
+    private fun showRegisterFragment() {
+        parentFragmentManager.beginTransaction()
+            .setCustomAnimations(
+                R.anim.slide_in_bottom,
+                R.anim.fade_out,
+                R.anim.fade_in,
+                R.anim.slide_out_bottom
+            )
+            .addToBackStack(null)
+            .replace(R.id.container, RegisterFragment())
+            .commit()
+    }
+
     private fun login(login: String, password: String) = CoroutineScope(Dispatchers.IO).launch {
         val user = userRepository.loginUser(login, password)
         activity?.runOnUiThread {
             if (user != null) {
-                sharedPrefs.edit()
-                    .putString("LAST_USER_NAME", login)
-                    .apply()
-                parentFragmentManager.beginTransaction()
-                    .replace(R.id.container, HelloFragment())
-                    .commit()
+                saveToSharedPrefs(login)
+                showHelloFragment()
             } else {
                 Toast.makeText(
                     requireContext(),
@@ -107,6 +119,18 @@ class LoginFragment : Fragment() {
                 ).show()
             }
         }
+    }
+
+    private fun saveToSharedPrefs(login: String) {
+        sharedPrefs.edit()
+            .putString(LAST_LOGIN, login)
+            .apply()
+    }
+
+    private fun showHelloFragment() {
+        parentFragmentManager.beginTransaction()
+            .replace(R.id.container, HelloFragment())
+            .commit()
     }
 
     override fun onDestroy() {
