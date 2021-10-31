@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
+import by.dzrvnsk.smartcountries.LAST_LOGIN
 import by.dzrvnsk.smartcountries.R
 import by.dzrvnsk.smartcountries.database.UserRepository
 import by.dzrvnsk.smartcountries.databinding.FragmentLoginBinding
@@ -28,7 +29,7 @@ class LoginFragment : Fragment() {
 
     private val compositeDisposable = CompositeDisposable()
     private val sharedPrefs: SharedPreferences by lazy {
-        requireActivity().getSharedPreferences("LAST_LOGIN", Context.MODE_PRIVATE)
+        requireActivity().getSharedPreferences(LAST_LOGIN, Context.MODE_PRIVATE)
     }
     private val userRepository: UserRepository by inject()
 
@@ -49,16 +50,7 @@ class LoginFragment : Fragment() {
                 login(editLoginLogin.text.toString(), editLoginPassword.text.toString())
             }
             btnRegister.setOnClickListener {
-                parentFragmentManager.beginTransaction()
-                    .setCustomAnimations(
-                        R.anim.slide_in_bottom,
-                        R.anim.fade_out,
-                        R.anim.fade_in,
-                        R.anim.slide_out_bottom
-                    )
-                    .addToBackStack(null)
-                    .replace(R.id.container, RegisterFragment())
-                    .commit()
+                showRegisterFragment()
             }
             val loginObservable = Observable.create<Boolean> { emitter ->
                 editLoginLogin.addTextChangedListener {
@@ -89,12 +81,25 @@ class LoginFragment : Fragment() {
         }
     }
 
+    private fun showRegisterFragment() {
+        parentFragmentManager.beginTransaction()
+            .setCustomAnimations(
+                R.anim.slide_in_bottom,
+                R.anim.fade_out,
+                R.anim.fade_in,
+                R.anim.slide_out_bottom
+            )
+            .addToBackStack(null)
+            .replace(R.id.container, RegisterFragment())
+            .commit()
+    }
+
     private fun login(login: String, password: String) = CoroutineScope(Dispatchers.IO).launch {
         val user = userRepository.loginUser(login, password)
         activity?.runOnUiThread {
             if (user != null) {
                 sharedPrefs.edit()
-                    .putString("LAST_USER_NAME", login)
+                    .putString(LAST_LOGIN, login)
                     .apply()
                 parentFragmentManager.beginTransaction()
                     .replace(R.id.container, HelloFragment())
