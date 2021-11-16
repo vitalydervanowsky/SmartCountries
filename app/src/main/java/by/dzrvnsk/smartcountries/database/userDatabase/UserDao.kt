@@ -1,4 +1,4 @@
-package by.dzrvnsk.smartcountries.database
+package by.dzrvnsk.smartcountries.database.userDatabase
 
 import androidx.room.Dao
 import androidx.room.Insert
@@ -13,5 +13,4 @@ interface UserDao {
 
     @Query("SELECT * from users where login=(:login) and password=(:password)")
     suspend fun loginUser(login: String, password: String): User?
-
 }

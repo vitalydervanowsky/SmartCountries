@@ -8,7 +8,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.widget.SearchView
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
+import by.dzrvnsk.smartcountries.NAV_OPTIONS_ANIMATION_SLIDE_IN_RIGHT
 import by.dzrvnsk.smartcountries.R
 import by.dzrvnsk.smartcountries.RANDOM_COUNTRY
 import by.dzrvnsk.smartcountries.RANDOM_COUNTRY_FLAG
@@ -17,7 +20,7 @@ import by.dzrvnsk.smartcountries.adapter.CountryAdapter
 import by.dzrvnsk.smartcountries.databinding.FragmentListBinding
 import by.dzrvnsk.smartcountries.model.response.Country
 import by.dzrvnsk.smartcountries.viewModel.CountryViewModel
-import org.koin.android.viewmodel.ext.android.sharedViewModel
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class ListFragment : Fragment() {
 
@@ -30,7 +33,8 @@ class ListFragment : Fragment() {
     private lateinit var adapter: CountryAdapter
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentListBinding.inflate(layoutInflater, container, false)
@@ -88,16 +92,11 @@ class ListFragment : Fragment() {
     }
 
     private fun showDetailsFragment() {
-        parentFragmentManager.beginTransaction()
-            .setCustomAnimations(
-                R.anim.slide_in_right,
-                R.anim.fade_out,
-                R.anim.fade_in,
-                R.anim.slide_out_right
-            )
-            .addToBackStack(null)
-            .replace(R.id.container, DetailsFragment())
-            .commit()
+        findNavController().navigate(
+            R.id.action_listFragment_to_detailsFragment,
+            bundleOf(),
+            NAV_OPTIONS_ANIMATION_SLIDE_IN_RIGHT
+        )
     }
 
     override fun onDestroy() {

@@ -25,7 +25,6 @@ class CountryViewModel(private val apiCountry: ApiCountry) : ViewModel() {
                     response: Response<ArrayList<Country>>
                 ) {
                     _countriesLiveData.value = response.body()
-                    _currentCountryLiveData.value = response.body()?.get(0)
                 }
 
                 override fun onFailure(call: Call<ArrayList<Country>>, t: Throwable) {

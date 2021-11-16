@@ -1,19 +1,32 @@
 package by.dzrvnsk.smartcountries.fragments
 
-import android.content.*
+import android.content.ComponentName
+import android.content.Context
 import android.content.Context.BIND_AUTO_CREATE
+import android.content.Intent
+import android.content.ServiceConnection
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.os.IBinder
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
-import by.dzrvnsk.smartcountries.*
+import androidx.navigation.fragment.findNavController
+import by.dzrvnsk.smartcountries.LAST_LOGIN
+import by.dzrvnsk.smartcountries.LAST_SCORES
+import by.dzrvnsk.smartcountries.LAST_TIME
+import by.dzrvnsk.smartcountries.NAV_OPTIONS_ANIMATION_SLIDE_IN_BOTTOM
+import by.dzrvnsk.smartcountries.NO_NAME
+import by.dzrvnsk.smartcountries.NO_SCORES
+import by.dzrvnsk.smartcountries.NO_TIME
+import by.dzrvnsk.smartcountries.R
 import by.dzrvnsk.smartcountries.databinding.FragmentHelloBinding
 import by.dzrvnsk.smartcountries.service.ReminderService
 import by.dzrvnsk.smartcountries.viewModel.CountryViewModel
-import org.koin.android.viewmodel.ext.android.sharedViewModel
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class HelloFragment : Fragment() {
 
@@ -24,11 +37,11 @@ class HelloFragment : Fragment() {
     }
     private var reminderService: ReminderService? = ReminderService()
     private val countryViewModel: CountryViewModel by sharedViewModel()
-
     private val connection = createServiceConnection()
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentHelloBinding.inflate(layoutInflater, container, false)
@@ -49,46 +62,36 @@ class HelloFragment : Fragment() {
         initListeners()
     }
 
-    private fun initListeners() {
-        binding.apply {
-            btnStartQuiz.setOnClickListener {
-                showQuizFragment()
-            }
-            btnShowScores.setOnClickListener {
-                showResultsFragment()
-            }
-            btnLogout.setOnClickListener {
-                resetSharedPrefs()
-                showLoginFragment()
-            }
-            btnSetReminder.setOnClickListener {
-                startRemindService()
-            }
-            btnDisableReminder.setOnClickListener {
-                stopReminderService()
-            }
+    private fun initListeners() = with(binding) {
+        btnStartQuiz.setOnClickListener {
+            showQuizFragment()
+        }
+        btnShowScores.setOnClickListener {
+            showScoresFragment()
+        }
+        btnLogout.setOnClickListener {
+            resetSharedPrefs()
+            showLoginFragment()
+        }
+        btnSetReminder.setOnClickListener {
+            startRemindService()
+        }
+        btnDisableReminder.setOnClickListener {
+            stopReminderService()
         }
     }
 
-    private fun initViews() {
-        binding.apply {
-            val helloText =
-                getString(R.string.say_hello) + sharedPrefs.getString(LAST_LOGIN, NO_NAME) + "!"
-            tvHello.text = helloText
-            val lastScores = sharedPrefs.getInt(LAST_SCORES, NO_SCORES)
-            if (lastScores == NO_SCORES) {
-                tvLastScores.visibility = View.GONE
-            }
-            val lastScoresText = getString(R.string.last_scores) + lastScores
-            tvLastScores.text = lastScoresText
+    private fun initViews() = with(binding) {
+        val helloText =
+            getString(R.string.say_hello) + sharedPrefs.getString(LAST_LOGIN, NO_NAME) + "!"
+        tvHello.text = helloText
+        val lastScores = sharedPrefs.getInt(LAST_SCORES, NO_SCORES)
+        val lastTime = sharedPrefs.getLong(LAST_TIME, NO_TIME)
+        if (lastTime == NO_TIME) {
+            tvLastScores.visibility = View.GONE
         }
-    }
-
-    private fun showResultsFragment() {
-        parentFragmentManager.beginTransaction()
-            .addToBackStack(null)
-            .replace(R.id.container, ResultsFragment())
-            .commit()
+        val lastScoresText = getString(R.string.last_scores) + lastScores
+        tvLastScores.text = lastScoresText
     }
 
     private fun stopReminderService() {
@@ -111,29 +114,28 @@ class HelloFragment : Fragment() {
             .apply()
     }
 
-    private fun showLoginFragment() {
-        parentFragmentManager.beginTransaction()
-            .setCustomAnimations(
-                R.anim.slide_in_bottom,
-                R.anim.fade_out,
-                R.anim.fade_in,
-                R.anim.slide_out_bottom
-            )
-            .addToBackStack(null)
-            .replace(R.id.container, LoginFragment())
-            .commit()
+    private fun showQuizFragment() {
+        findNavController().navigate(
+            R.id.action_helloFragment_to_quizFragment,
+            bundleOf(),
+            NAV_OPTIONS_ANIMATION_SLIDE_IN_BOTTOM
+        )
     }
 
-    private fun showQuizFragment() {
-        parentFragmentManager.beginTransaction()
-            .setCustomAnimations(
-                R.anim.slide_in_bottom,
-                R.anim.fade_out,
-                R.anim.fade_in,
-                R.anim.slide_out_bottom
-            )
-            .replace(R.id.container, QuizFragment())
-            .commit()
+    private fun showScoresFragment() {
+        findNavController().navigate(
+            R.id.action_helloFragment_to_scoresFragment,
+            bundleOf(),
+            NAV_OPTIONS_ANIMATION_SLIDE_IN_BOTTOM
+        )
+    }
+
+    private fun showLoginFragment() {
+        findNavController().navigate(
+            R.id.action_helloFragment_to_loginFragment,
+            bundleOf(),
+            NAV_OPTIONS_ANIMATION_SLIDE_IN_BOTTOM
+        )
     }
 
     private fun createServiceConnection(): ServiceConnection {

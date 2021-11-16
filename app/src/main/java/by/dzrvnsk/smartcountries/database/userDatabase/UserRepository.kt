@@ -1,4 +1,4 @@
-package by.dzrvnsk.smartcountries.database
+package by.dzrvnsk.smartcountries.database.userDatabase
 
 import androidx.annotation.WorkerThread
 
@@ -11,5 +11,4 @@ class UserRepository(private val userDao: UserDao) {
 
     @WorkerThread
     suspend fun loginUser(login: String, password: String): User? = userDao.loginUser(login, password)
-
 }

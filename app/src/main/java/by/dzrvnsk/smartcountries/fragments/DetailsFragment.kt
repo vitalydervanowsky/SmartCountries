@@ -11,7 +11,7 @@ import by.dzrvnsk.smartcountries.R
 import by.dzrvnsk.smartcountries.databinding.FragmentDetailsBinding
 import by.dzrvnsk.smartcountries.viewModel.CountryViewModel
 import com.bumptech.glide.Glide
-import org.koin.android.viewmodel.ext.android.sharedViewModel
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class DetailsFragment : Fragment() {
 
@@ -20,7 +20,8 @@ class DetailsFragment : Fragment() {
     private val countryViewModel: CountryViewModel by sharedViewModel()
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentDetailsBinding.inflate(layoutInflater, container, false)
