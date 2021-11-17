@@ -8,7 +8,8 @@ import androidx.recyclerview.widget.RecyclerView
 import by.dzrvnsk.smartcountries.databinding.ItemCountryBinding
 import by.dzrvnsk.smartcountries.model.response.Country
 import com.bumptech.glide.Glide
-import java.util.*
+import java.util.Locale
+import kotlin.collections.ArrayList
 
 class CountryAdapter(
     private val countries: ArrayList<Country>,

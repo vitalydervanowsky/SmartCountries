@@ -58,26 +58,19 @@ dependencies {
     kapt "androidx.room:room-compiler:$room_version"
 
     // ViewModel
-    def lifecycle_version = "2.4.0-alpha03"
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version")
+    def lifecycle_version = "2.4.0"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
     // LiveData
-    implementation("androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version")
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
     // Lifecycles only (without ViewModel or LiveData)
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle_version")
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle_version"
     // Saved state module for ViewModel
-    implementation("androidx.lifecycle:lifecycle-viewmodel-savedstate:$lifecycle_version")
+    implementation "androidx.lifecycle:lifecycle-viewmodel-savedstate:$lifecycle_version"
     // Annotation processor
-    annotationProcessor "androidx.lifecycle:lifecycle-compiler:$lifecycle_version"
-    // alternately - if using Java8, use the following instead of lifecycle-compiler
-    implementation("androidx.lifecycle:lifecycle-common-java8:$lifecycle_version")
-    // optional - helpers for implementing LifecycleOwner in a Service
-    implementation("androidx.lifecycle:lifecycle-service:$lifecycle_version")
-    // optional - ProcessLifecycleOwner provides a lifecycle for the whole application process
-    implementation("androidx.lifecycle:lifecycle-process:$lifecycle_version")
-    // optional - ReactiveStreams support for LiveData
-    implementation("androidx.lifecycle:lifecycle-reactivestreams-ktx:$lifecycle_version")
+    kapt "androidx.lifecycle:lifecycle-compiler:$lifecycle_version"
 
-    implementation 'android.arch.lifecycle:extensions:1.1.1'
+    implementation "android.arch.lifecycle:extensions:1.1.1"
+    implementation "androidx.lifecycle:lifecycle-extensions:2.2.0"
 
     // RecycleView
     implementation 'androidx.recyclerview:recyclerview:1.2.1'
@@ -100,12 +93,17 @@ dependencies {
     // Koin
     def koin_version = "1.0.2"
     implementation "org.koin:koin-android:$koin_version"
-    implementation "org.koin:koin-android-viewmodel:$koin_version"
+    implementation "org.koin:koin-androidx-viewmodel:$koin_version"
     implementation "org.koin:koin-androidx-scope:$koin_version"
 
     // WorkManager: Kotlin + coroutines
     def work_version = "2.7.0"
     implementation "androidx.work:work-runtime-ktx:$work_version"
+
+    // Jetpack Navigation
+    def nav_version = "2.3.5"
+    implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
+    implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
 
     // Testing
     testImplementation 'junit:junit:4.+'

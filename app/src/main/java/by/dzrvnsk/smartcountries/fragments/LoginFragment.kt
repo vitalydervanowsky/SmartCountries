@@ -7,11 +7,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import by.dzrvnsk.smartcountries.LAST_LOGIN
+import by.dzrvnsk.smartcountries.NAV_OPTIONS_ANIMATION_SLIDE_IN_BOTTOM
 import by.dzrvnsk.smartcountries.R
-import by.dzrvnsk.smartcountries.database.UserRepository
+import by.dzrvnsk.smartcountries.database.userDatabase.UserRepository
 import by.dzrvnsk.smartcountries.databinding.FragmentLoginBinding
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -32,7 +35,8 @@ class LoginFragment : Fragment() {
     private val userRepository: UserRepository by inject()
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentLoginBinding.inflate(inflater, container, false)
@@ -50,32 +54,30 @@ class LoginFragment : Fragment() {
         enableBtnLogin()
     }
 
-    private fun initListeners() {
-        binding.apply {
-            btnLogin.setOnClickListener {
-                login(editLoginLogin.text.toString(), editLoginPassword.text.toString())
-            }
-            btnRegister.setOnClickListener {
-                showRegisterFragment()
-            }
+    private fun initListeners() = with(binding) {
+        btnLogin.setOnClickListener {
+            login(editLoginLogin.text.toString(), editLoginPassword.text.toString())
+        }
+        btnRegister.setOnClickListener {
+            showRegisterFragment()
         }
     }
 
-    private fun enableBtnLogin() {
-        binding.apply {
-            val loginObservable = Observable.create<Boolean> { emitter ->
-                editLoginLogin.addTextChangedListener {
-                    if (!emitter.isDisposed)
-                        emitter.onNext(it.toString().isNotEmpty())
-                }
+    private fun enableBtnLogin() = with(binding) {
+        val loginObservable = Observable.create<Boolean> { emitter ->
+            editLoginLogin.addTextChangedListener {
+                if (!emitter.isDisposed)
+                    emitter.onNext(it.toString().isNotEmpty())
             }
-            val passwordObservable = Observable.create<Boolean> { emitter ->
-                editLoginPassword.addTextChangedListener {
-                    if (!emitter.isDisposed)
-                        emitter.onNext(it.toString().isNotEmpty())
-                }
+        }
+        val passwordObservable = Observable.create<Boolean> { emitter ->
+            editLoginPassword.addTextChangedListener {
+                if (!emitter.isDisposed)
+                    emitter.onNext(it.toString().isNotEmpty())
             }
-            CompositeDisposable().add(Observable
+        }
+        CompositeDisposable().add(
+            Observable
                 .combineLatest(
                     loginObservable,
                     passwordObservable,
@@ -88,21 +90,15 @@ class LoginFragment : Fragment() {
                 .subscribe {
                     btnLogin.isEnabled = it
                 }
-            )
-        }
+        )
     }
 
     private fun showRegisterFragment() {
-        parentFragmentManager.beginTransaction()
-            .setCustomAnimations(
-                R.anim.slide_in_bottom,
-                R.anim.fade_out,
-                R.anim.fade_in,
-                R.anim.slide_out_bottom
-            )
-            .addToBackStack(null)
-            .replace(R.id.container, RegisterFragment())
-            .commit()
+        findNavController().navigate(
+            R.id.action_loginFragment_to_registerFragment,
+            bundleOf(),
+            NAV_OPTIONS_ANIMATION_SLIDE_IN_BOTTOM
+        )
     }
 
     private fun login(login: String, password: String) = CoroutineScope(Dispatchers.IO).launch {
@@ -128,9 +124,7 @@ class LoginFragment : Fragment() {
     }
 
     private fun showHelloFragment() {
-        parentFragmentManager.beginTransaction()
-            .replace(R.id.container, HelloFragment())
-            .commit()
+        findNavController().navigate(R.id.action_loginFragment_to_helloFragment)
     }
 
     override fun onDestroy() {

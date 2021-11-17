@@ -6,8 +6,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import by.dzrvnsk.smartcountries.LAST_LOGIN
+import by.dzrvnsk.smartcountries.NAV_OPTIONS_ANIMATION_SCALE_IN
+import by.dzrvnsk.smartcountries.NAV_OPTIONS_ANIMATION_SLIDE_IN_BOTTOM
 import by.dzrvnsk.smartcountries.NO_NAME
 import by.dzrvnsk.smartcountries.R
 import by.dzrvnsk.smartcountries.databinding.FragmentMenuBinding
@@ -21,7 +25,8 @@ class MenuFragment : Fragment() {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentMenuBinding.inflate(layoutInflater, container, false)
@@ -34,28 +39,21 @@ class MenuFragment : Fragment() {
         initListeners()
     }
 
-    private fun initListeners() {
-        binding.apply {
-            btnLearn.setOnClickListener {
-                showListFragment()
-            }
-            btnTest.setOnClickListener {
-                doOnTestClick()
-            }
+    private fun initListeners() = with(binding) {
+        btnLearn.setOnClickListener {
+            showListFragment()
+        }
+        btnTest.setOnClickListener {
+            doOnTestClick()
         }
     }
 
     private fun showListFragment() {
-        parentFragmentManager.beginTransaction()
-            .setCustomAnimations(
-                R.anim.scale_in,
-                R.anim.fade_out,
-                R.anim.fade_in,
-                R.anim.scale_out
-            )
-            .addToBackStack(null)
-            .replace(R.id.container, ListFragment())
-            .commit()
+        findNavController().navigate(
+            R.id.action_menuFragment_to_listFragment,
+            bundleOf(),
+            NAV_OPTIONS_ANIMATION_SCALE_IN
+        )
     }
 
     private fun doOnTestClick() {
@@ -67,29 +65,19 @@ class MenuFragment : Fragment() {
     }
 
     private fun showHelloFragment() {
-        parentFragmentManager.beginTransaction()
-            .setCustomAnimations(
-                R.anim.slide_in_bottom,
-                R.anim.fade_out,
-                R.anim.fade_in,
-                R.anim.slide_out_bottom
-            )
-            .addToBackStack(null)
-            .replace(R.id.container, HelloFragment())
-            .commit()
+        findNavController().navigate(
+            R.id.action_menuFragment_to_helloFragment,
+            bundleOf(),
+            NAV_OPTIONS_ANIMATION_SLIDE_IN_BOTTOM
+        )
     }
 
     private fun showLoginFragment() {
-        parentFragmentManager.beginTransaction()
-            .setCustomAnimations(
-                R.anim.slide_in_bottom,
-                R.anim.fade_out,
-                R.anim.fade_in,
-                R.anim.slide_out_bottom
-            )
-            .addToBackStack(null)
-            .replace(R.id.container, LoginFragment())
-            .commit()
+        findNavController().navigate(
+            R.id.action_menuFragment_to_loginFragment,
+            bundleOf(),
+            NAV_OPTIONS_ANIMATION_SLIDE_IN_BOTTOM
+        )
     }
 
     override fun onDestroy() {

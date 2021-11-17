@@ -8,7 +8,13 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.widget.RemoteViews
-import by.dzrvnsk.smartcountries.*
+import by.dzrvnsk.smartcountries.MainActivity
+import by.dzrvnsk.smartcountries.NO_COUNTRY_FLAG
+import by.dzrvnsk.smartcountries.NO_COUNTRY_NAME
+import by.dzrvnsk.smartcountries.R
+import by.dzrvnsk.smartcountries.RANDOM_COUNTRY
+import by.dzrvnsk.smartcountries.RANDOM_COUNTRY_FLAG
+import by.dzrvnsk.smartcountries.RANDOM_COUNTRY_NAME
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.AppWidgetTarget
 import com.bumptech.glide.request.transition.Transition

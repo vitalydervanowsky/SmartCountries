@@ -7,9 +7,10 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import by.dzrvnsk.smartcountries.R
-import by.dzrvnsk.smartcountries.database.User
-import by.dzrvnsk.smartcountries.database.UserRepository
+import by.dzrvnsk.smartcountries.database.userDatabase.User
+import by.dzrvnsk.smartcountries.database.userDatabase.UserRepository
 import by.dzrvnsk.smartcountries.databinding.FragmentRegisterBinding
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -27,7 +28,8 @@ class RegisterFragment : Fragment() {
     private val userRepository: UserRepository by inject()
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentRegisterBinding.inflate(layoutInflater, container, false)
@@ -45,21 +47,21 @@ class RegisterFragment : Fragment() {
         enableBtnRegister()
     }
 
-    private fun enableBtnRegister() {
-        binding.apply {
-            val emailObservable = Observable.create<Boolean> { emitter ->
-                editRegistrationLogin.addTextChangedListener {
-                    if (!emitter.isDisposed)
-                        emitter.onNext(it.toString().isNotEmpty())
-                }
+    private fun enableBtnRegister() = with(binding) {
+        val emailObservable = Observable.create<Boolean> { emitter ->
+            editRegistrationLogin.addTextChangedListener {
+                if (!emitter.isDisposed)
+                    emitter.onNext(it.toString().isNotEmpty())
             }
-            val passwordIsNotEmptyObservable = Observable.create<Boolean> { emitter ->
-                editRegistrationPassword.addTextChangedListener {
-                    if (!emitter.isDisposed)
-                        emitter.onNext(it.toString().isNotEmpty())
-                }
+        }
+        val passwordIsNotEmptyObservable = Observable.create<Boolean> { emitter ->
+            editRegistrationPassword.addTextChangedListener {
+                if (!emitter.isDisposed)
+                    emitter.onNext(it.toString().isNotEmpty())
             }
-            CompositeDisposable().add(Observable
+        }
+        CompositeDisposable().add(
+            Observable
                 .combineLatest(
                     emailObservable,
                     passwordIsNotEmptyObservable,
@@ -72,29 +74,27 @@ class RegisterFragment : Fragment() {
                 .subscribe {
                     btnRegister.isEnabled = it
                 }
+        )
+    }
+
+    private fun initListeners() = with(binding) {
+        btnRegister.setOnClickListener {
+            registerUser(
+                editRegistrationLogin.text.toString(),
+                editRegistrationPassword.text.toString()
             )
         }
     }
 
-    private fun initListeners() {
-        binding.apply {
-            btnRegister.setOnClickListener {
-                register(
-                    editRegistrationLogin.text.toString(),
-                    editRegistrationPassword.text.toString()
-                )
+    private fun registerUser(login: String, password: String) =
+        CoroutineScope(Dispatchers.IO).launch {
+            userRepository.registerUser(User(login, password))
+            activity?.runOnUiThread {
+                val toastText = login + getString(R.string.registration_success)
+                Toast.makeText(requireContext(), toastText, Toast.LENGTH_SHORT).show()
+                findNavController().popBackStack()
             }
         }
-    }
-
-    private fun register(login: String, password: String) = CoroutineScope(Dispatchers.IO).launch {
-        userRepository.registerUser(User(login, password))
-        activity?.runOnUiThread {
-            val toastText = login + getString(R.string.registration_success)
-            Toast.makeText(requireContext(), toastText, Toast.LENGTH_SHORT).show()
-            activity?.onBackPressed()
-        }
-    }
 
     override fun onDestroy() {
         super.onDestroy()

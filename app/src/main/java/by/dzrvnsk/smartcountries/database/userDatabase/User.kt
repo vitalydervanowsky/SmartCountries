@@ -1,4 +1,4 @@
-package by.dzrvnsk.smartcountries.database
+package by.dzrvnsk.smartcountries.database.userDatabase
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
