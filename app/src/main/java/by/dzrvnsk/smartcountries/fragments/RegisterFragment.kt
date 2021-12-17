@@ -18,7 +18,9 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.koin.android.ext.android.inject
 
 class RegisterFragment : Fragment() {
@@ -26,6 +28,7 @@ class RegisterFragment : Fragment() {
     private var _binding: FragmentRegisterBinding? = null
     private val binding get() = _binding!!
     private val userRepository: UserRepository by inject()
+    private val scope = CoroutineScope(Dispatchers.IO)
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -86,18 +89,20 @@ class RegisterFragment : Fragment() {
         }
     }
 
-    private fun registerUser(login: String, password: String) =
-        CoroutineScope(Dispatchers.IO).launch {
+    private fun registerUser(login: String, password: String) {
+        scope.launch {
             userRepository.registerUser(User(login, password))
-            activity?.runOnUiThread {
+            withContext(Dispatchers.Main) {
                 val toastText = login + getString(R.string.registration_success)
                 Toast.makeText(requireContext(), toastText, Toast.LENGTH_SHORT).show()
                 findNavController().popBackStack()
             }
         }
+    }
 
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
+        scope.cancel()
     }
 }

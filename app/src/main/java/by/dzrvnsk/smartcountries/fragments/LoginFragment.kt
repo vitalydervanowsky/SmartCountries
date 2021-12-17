@@ -22,7 +22,9 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.koin.android.ext.android.inject
 
 class LoginFragment : Fragment() {
@@ -33,6 +35,7 @@ class LoginFragment : Fragment() {
         requireActivity().getSharedPreferences(LAST_LOGIN, Context.MODE_PRIVATE)
     }
     private val userRepository: UserRepository by inject()
+    private val scope = CoroutineScope(Dispatchers.IO)
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -101,18 +104,20 @@ class LoginFragment : Fragment() {
         )
     }
 
-    private fun login(login: String, password: String) = CoroutineScope(Dispatchers.IO).launch {
-        val user = userRepository.loginUser(login, password)
-        activity?.runOnUiThread {
-            if (user != null) {
-                saveToSharedPrefs(login)
-                showHelloFragment()
-            } else {
-                Toast.makeText(
-                    requireContext(),
-                    getString(R.string.email_password_error),
-                    Toast.LENGTH_SHORT
-                ).show()
+    private fun login(login: String, password: String) {
+        scope.launch {
+            val user = userRepository.loginUser(login, password)
+            withContext(Dispatchers.Main) {
+                if (user != null) {
+                    saveToSharedPrefs(login)
+                    showHelloFragment()
+                } else {
+                    Toast.makeText(
+                        requireContext(),
+                        getString(R.string.email_password_error),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
             }
         }
     }
@@ -130,5 +135,6 @@ class LoginFragment : Fragment() {
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
+        scope.cancel()
     }
 }
