@@ -3,21 +3,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="@dimen/great_offset"
+    android:padding="@dimen/margin_32dp"
     android:orientation="vertical"
-    tools:context=".fragments.MenuFragment">
+    tools:context=".presentation.fragments.MenuFragment">
 
     <Button
-        android:id="@+id/btn_learn"
+        android:id="@+id/learnButton"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:layout_marginBottom="@dimen/great_offset"
+        android:layout_marginBottom="@dimen/margin_32dp"
         android:text="@string/learn_button"
         android:textSize="@dimen/title_size"/>
 
     <Button
-        android:id="@+id/btn_test"
+        android:id="@+id/testButton"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"

@@ -3,18 +3,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="@dimen/small_offset"
-    tools:context=".fragments.DetailsFragment">
+    android:layout_height="match_parent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <ImageView
-            android:id="@+id/iv_country_flag"
-            android:layout_width="300dp"
+            android:id="@+id/imageView"
+            android:layout_width="wrap_content"
             android:layout_height="200dp"
+            tools:layout_width="300dp"
+            android:layout_marginTop="@dimen/margin_16dp"
             android:background="@drawable/imageview_border"
             android:contentDescription="@string/ivCountryFlagContentDescription"
             app:layout_constraintEnd_toEndOf="parent"
@@ -22,83 +22,83 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/tv_country_name"
+            android:id="@+id/countryNameTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/medium_offset"
+            android:layout_marginTop="@dimen/margin_8dp"
             android:textAlignment="center"
             android:textSize="@dimen/big_text_size"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/iv_country_flag"
+            app:layout_constraintTop_toBottomOf="@id/imageView"
             tools:text="Country name" />
 
         <TextView
-            android:id="@+id/tv_country_name_official"
+            android:id="@+id/countryNameOfficialTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/medium_offset"
+            android:layout_marginTop="@dimen/margin_8dp"
             android:textAlignment="center"
             android:textSize="@dimen/medium_text_size"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_country_name"
+            app:layout_constraintTop_toBottomOf="@id/countryNameTextView"
             tools:text="Official country name" />
 
         <TextView
-            android:id="@+id/tv_country_capital"
+            android:id="@+id/countryCapitalTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/medium_offset"
+            android:layout_marginTop="@dimen/margin_8dp"
             android:textSize="@dimen/big_text_size"
             android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_country_name_official"
+            app:layout_constraintTop_toBottomOf="@id/countryNameOfficialTextView"
             tools:text="Capital"
             tools:visibility="visible" />
 
         <TextView
-            android:id="@+id/tv_country_region"
+            android:id="@+id/countryRegionTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/medium_offset"
+            android:layout_marginTop="@dimen/margin_8dp"
             android:textSize="@dimen/medium_text_size"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_country_capital"
+            app:layout_constraintTop_toBottomOf="@id/countryCapitalTextView"
             tools:text="Region" />
 
         <TextView
-            android:id="@+id/tv_country_area"
+            android:id="@+id/countryAreaTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/medium_offset"
+            android:layout_marginTop="@dimen/margin_8dp"
             android:textSize="@dimen/medium_text_size"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_country_region"
+            app:layout_constraintTop_toBottomOf="@id/countryRegionTextView"
             tools:text="Area: 100000" />
 
         <TextView
-            android:id="@+id/tv_country_population"
+            android:id="@+id/populationTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/medium_offset"
+            android:layout_marginTop="@dimen/margin_8dp"
             android:textSize="@dimen/medium_text_size"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_country_area"
+            app:layout_constraintTop_toBottomOf="@id/countryAreaTextView"
             tools:text="Population: 100000" />
 
-        <FrameLayout
+        <!--<FrameLayout
             android:id="@+id/map_container"
             android:layout_width="match_parent"
             android:layout_height="300dp"
-            android:layout_marginTop="@dimen/great_offset"
+            android:layout_marginTop="@dimen/margin_32dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_country_population" />
+            app:layout_constraintTop_toBottomOf="@id/populationTextView" />-->
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

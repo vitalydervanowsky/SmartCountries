@@ -8,7 +8,7 @@ import android.content.Intent
 import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
-import by.dzrvnsk.smartcountries.MainActivity
+import by.dzrvnsk.smartcountries.presentation.MainActivity
 import by.dzrvnsk.smartcountries.R
 import kotlin.random.Random
 

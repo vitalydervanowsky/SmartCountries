@@ -1,25 +1,27 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    style="@style/Widget.SmartCountries.AppWidget.Container"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/widget"
+    style="@style/Widget.SmartCountries.AppWidget.Container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="horizontal"
     android:gravity="center"
+    android:orientation="horizontal"
     android:theme="@style/Theme.SmartCountries.AppWidgetContainer">
 
     <ImageView
-        android:id="@+id/iv_country_flag"
+        android:id="@+id/imageView"
         android:layout_width="60dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:contentDescription="@string/ivCountryFlagContentDescription" />
 
     <TextView
-        android:id="@+id/tv_country_name"
+        android:id="@+id/countryNameTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
-        android:layout_margin="8dp"
-        android:textSize="@dimen/small_text_size" />
+        android:layout_margin="@dimen/margin_8dp"
+        android:textSize="@dimen/small_text_size"
+        tools:text="Belarus" />
 
 </LinearLayout>

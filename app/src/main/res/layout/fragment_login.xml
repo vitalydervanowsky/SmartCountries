@@ -4,11 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="@dimen/great_offset"
-    tools:context=".fragments.LoginFragment">
+    android:padding="@dimen/margin_32dp"
+    tools:context=".presentation.fragments.login.LoginFragment">
 
     <TextView
-        android:id="@+id/tv_welcome"
+        android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/welcome"
@@ -18,20 +18,20 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/tv_login_login"
+        android:id="@+id/loginTil"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/big_offset"
+        android:layout_marginTop="@dimen/margin_16dp"
         android:hint="@string/login"
         app:helperText="Input your login here"
         app:helperTextEnabled="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_welcome"
+        app:layout_constraintTop_toBottomOf="@id/textView"
         app:startIconDrawable="@drawable/ic_login_profile">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edit_login_login"
+            android:id="@+id/loginEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textEmailAddress" />
@@ -39,21 +39,21 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/tv_login_password"
+        android:id="@+id/passwordTil"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/big_offset"
+        android:layout_marginTop="@dimen/margin_16dp"
         android:hint="@string/password"
         app:endIconMode="password_toggle"
         app:helperText="Input your password here"
         app:helperTextEnabled="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_login_login"
+        app:layout_constraintTop_toBottomOf="@id/loginTil"
         app:startIconDrawable="@drawable/ic_login_password">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edit_login_password"
+            android:id="@+id/passwordEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textPassword" />
@@ -61,24 +61,24 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_login"
+        android:id="@+id/loginButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/big_offset"
+        android:layout_marginTop="@dimen/margin_16dp"
         android:text="@string/login"
         android:enabled="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_login_password" />
+        app:layout_constraintTop_toBottomOf="@id/passwordTil" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_register"
+        android:id="@+id/registerButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/big_offset"
+        android:layout_marginTop="@dimen/margin_16dp"
         android:text="@string/register"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btn_login" />
+        app:layout_constraintTop_toBottomOf="@id/loginButton" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

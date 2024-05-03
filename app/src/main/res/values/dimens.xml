@@ -1,10 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Offsets -->
-    <dimen name="small_offset">4dp</dimen>
-    <dimen name="medium_offset">8dp</dimen>
-    <dimen name="big_offset">16dp</dimen>
-    <dimen name="great_offset">32dp</dimen>
+    <!-- Margins -->
+    <dimen name="margin_4dp">4dp</dimen>
+    <dimen name="margin_8dp">8dp</dimen>
+    <dimen name="margin_16dp">16dp</dimen>
+    <dimen name="margin_32dp">32dp</dimen>
+
+    <!-- Paddings -->
+    <dimen name="padding_4dp">4dp</dimen>
+    <dimen name="padding_8dp">8dp</dimen>
+    <dimen name="padding_16dp">16dp</dimen>
+    <dimen name="padding_32dp">32dp</dimen>
 
     <!-- Font size -->
     <dimen name="small_text_size">12sp</dimen>

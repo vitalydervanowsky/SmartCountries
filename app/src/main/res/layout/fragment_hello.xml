@@ -4,11 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="@dimen/great_offset"
-    tools:context=".fragments.HelloFragment">
+    android:padding="@dimen/margin_32dp"
+    tools:context=".presentation.fragments.HelloFragment">
 
     <TextView
-        android:id="@+id/tv_hello"
+        android:id="@+id/helloTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="@dimen/title_size"
@@ -18,92 +18,85 @@
         tools:text="Hello, admin" />
 
     <TextView
-        android:id="@+id/tv_last_scores"
+        android:id="@+id/scoresTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/big_offset"
+        android:layout_marginTop="@dimen/margin_16dp"
         android:textSize="@dimen/big_text_size"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_hello"
+        app:layout_constraintTop_toBottomOf="@id/helloTextView"
         tools:text="Your last scores: 100" />
 
-    <androidx.constraintlayout.widget.Barrier
-        android:id="@+id/title_section_bottom_barrier"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:barrierDirection="bottom"
-        app:constraint_referenced_ids="tv_hello,tv_last_scores" />
-
     <Button
-        android:id="@+id/btn_start_quiz"
+        android:id="@+id/quizButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/big_offset"
-        android:layout_marginEnd="@dimen/medium_offset"
+        android:layout_marginTop="@dimen/margin_16dp"
+        android:layout_marginEnd="@dimen/margin_8dp"
         android:backgroundTint="@color/purple_700"
-        android:paddingVertical="@dimen/great_offset"
+        android:paddingVertical="@dimen/margin_32dp"
         android:text="@string/start_quiz"
-        app:layout_constraintEnd_toStartOf="@id/btn_show_scores"
+        app:layout_constraintEnd_toStartOf="@id/scoresButton"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/title_section_bottom_barrier" />
+        app:layout_constraintTop_toBottomOf="@id/scoresTextView" />
 
     <Button
-        android:id="@+id/btn_show_scores"
+        android:id="@+id/scoresButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/medium_offset"
-        android:layout_marginTop="@dimen/big_offset"
-        android:paddingVertical="@dimen/great_offset"
+        android:layout_marginStart="@dimen/margin_8dp"
+        android:layout_marginTop="@dimen/margin_16dp"
+        android:paddingVertical="@dimen/margin_32dp"
         android:text="@string/scores"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/btn_start_quiz"
-        app:layout_constraintTop_toBottomOf="@id/title_section_bottom_barrier" />
+        app:layout_constraintStart_toEndOf="@id/quizButton"
+        app:layout_constraintTop_toBottomOf="@id/scoresTextView" />
 
     <Button
-        android:id="@+id/btn_logout"
+        android:id="@+id/logoutButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/big_offset"
+        android:layout_marginTop="@dimen/margin_16dp"
         android:text="@string/logout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btn_start_quiz" />
+        app:layout_constraintTop_toBottomOf="@id/quizButton" />
 
     <TextView
         android:id="@+id/tv_set_reminder_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/great_offset"
+        android:layout_marginTop="@dimen/margin_32dp"
         android:text="@string/set_reminder_label"
         android:textAlignment="center"
         android:textSize="@dimen/medium_text_size"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btn_logout" />
+        app:layout_constraintTop_toBottomOf="@id/logoutButton" />
 
     <Button
-        android:id="@+id/btn_set_reminder"
+        android:id="@+id/setReminderButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/big_offset"
+        android:layout_marginTop="@dimen/margin_16dp"
         android:drawableLeft="@drawable/ic_reminder_set"
-        android:paddingVertical="@dimen/big_offset"
+        android:paddingVertical="@dimen/margin_16dp"
         android:text="@string/set_reminder"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_set_reminder_label" />
 
     <Button
-        android:id="@+id/btn_disable_reminder"
+        android:id="@+id/disableReminderButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/big_offset"
+        android:layout_marginTop="@dimen/margin_16dp"
         android:drawableLeft="@drawable/ic_reminder_disable"
-        android:paddingVertical="@dimen/big_offset"
+        android:paddingVertical="@dimen/margin_16dp"
         android:text="@string/disable_reminder"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_set_reminder" />
+        app:layout_constraintTop_toBottomOf="@+id/setReminderButton" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -4,93 +4,92 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingTop="@dimen/great_offset"
-    android:paddingStart="@dimen/great_offset"
-    android:paddingEnd="@dimen/great_offset"
-    tools:context=".fragments.QuizFragment">
+    android:paddingTop="@dimen/margin_32dp"
+    android:paddingStart="@dimen/margin_32dp"
+    android:paddingEnd="@dimen/margin_32dp">
 
     <TextView
-        android:id="@+id/tv_scores"
+        android:id="@+id/scoresTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="@dimen/big_text_size"
         app:layout_constrainedWidth="true"
-        app:layout_constraintEnd_toStartOf="@id/tv_question_number"
+        app:layout_constraintEnd_toStartOf="@id/questionNumberTextView"
         app:layout_constraintHorizontal_bias="0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Scores: 30" />
 
     <TextView
-        android:id="@+id/tv_question_number"
+        android:id="@+id/questionNumberTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="@dimen/big_text_size"
-        app:layout_constraintBaseline_toBaselineOf="@id/tv_scores"
+        app:layout_constraintBaseline_toBaselineOf="@id/scoresTextView"
         app:layout_constraintEnd_toEndOf="parent"
         tools:text="Question: 1/10" />
 
     <TextView
-        android:id="@+id/tv_question_text"
+        android:id="@+id/questionTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/big_offset"
+        android:layout_marginTop="@dimen/margin_16dp"
         android:text="@string/quiz_question_flag"
         android:textAlignment="center"
         android:textSize="@dimen/title_size"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_scores" />
+        app:layout_constraintTop_toBottomOf="@id/scoresTextView" />
 
     <ImageView
-        android:id="@+id/iv_question"
+        android:id="@+id/imageView"
         android:layout_width="300dp"
         android:layout_height="200dp"
-        android:layout_marginTop="@dimen/big_offset"
+        android:layout_marginTop="@dimen/margin_16dp"
         android:background="@drawable/imageview_border"
         android:contentDescription="@string/ivCountryFlagContentDescription"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_question_text" />
+        app:layout_constraintTop_toBottomOf="@id/questionTextView" />
 
     <Button
-        android:id="@+id/btn_option1"
+        android:id="@+id/option1Button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/big_offset"
-        app:layout_constraintTop_toBottomOf="@id/iv_question"
+        android:layout_marginTop="@dimen/margin_16dp"
+        app:layout_constraintTop_toBottomOf="@id/imageView"
         tools:text="Option1" />
 
     <Button
-        android:id="@+id/btn_option2"
+        android:id="@+id/option2Button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/medium_offset"
-        app:layout_constraintTop_toBottomOf="@id/btn_option1"
+        android:layout_marginTop="@dimen/margin_8dp"
+        app:layout_constraintTop_toBottomOf="@id/option1Button"
         tools:text="Option2" />
 
     <Button
-        android:id="@+id/btn_option3"
+        android:id="@+id/option3Button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/medium_offset"
-        app:layout_constraintTop_toBottomOf="@id/btn_option2"
+        android:layout_marginTop="@dimen/margin_8dp"
+        app:layout_constraintTop_toBottomOf="@id/option2Button"
         tools:text="Option3" />
 
     <Button
-        android:id="@+id/btn_option4"
+        android:id="@+id/option4Button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/medium_offset"
-        app:layout_constraintTop_toBottomOf="@id/btn_option3"
+        android:layout_marginTop="@dimen/margin_8dp"
+        app:layout_constraintTop_toBottomOf="@id/option3Button"
         tools:text="Option4" />
 
     <Button
-        android:id="@+id/btn_next_question"
+        android:id="@+id/nextButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/next_question"
-        app:layout_constraintTop_toBottomOf="@id/btn_option4"
+        app:layout_constraintTop_toBottomOf="@id/option4Button"
         app:layout_constraintEnd_toEndOf="parent"
         android:visibility="gone"
         tools:visibility="visible"/>

@@ -5,7 +5,7 @@ I used open API from [https://restcountries.com/](https://restcountries.com/).
 
 ## Components Used
 - MVVM architecture
-- View binding
+- View binding (already removed)
 - Single activity architecture
 - Room database
 - Live Data
@@ -22,3 +22,6 @@ I used open API from [https://restcountries.com/](https://restcountries.com/).
 - Notification
 - RxJava2
 - Animations
+
+## Build
+Set Java 11 in Settings -> Build, Execution, Deployment -> Build Tools -> Gradle

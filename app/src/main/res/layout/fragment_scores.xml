@@ -4,25 +4,26 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingHorizontal="@dimen/small_offset"
-    android:paddingTop="@dimen/small_offset"
-    tools:context=".fragments.ScoresFragment">
+    android:paddingHorizontal="@dimen/margin_4dp"
+    android:paddingTop="@dimen/margin_4dp"
+    tools:context=".presentation.fragments.scores.ScoresFragment">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_list"
+        android:id="@+id/recyclerView"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/btn_delete_scores"
+        app:layout_constraintBottom_toTopOf="@id/deleteButton"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         tools:listitem="@layout/item_score" />
 
     <Button
-        android:id="@+id/btn_delete_scores"
-        android:layout_width="wrap_content"
+        android:id="@+id/deleteButton"
+        android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_margin="@dimen/margin_16dp"
         android:text="@string/reset_scores"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"

@@ -4,11 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="@dimen/great_offset"
-    tools:context=".fragments.ResultsFragment">
+    android:padding="@dimen/margin_32dp"
+    tools:context=".presentation.fragments.ResultsFragment">
 
     <TextView
-        android:id="@+id/tv_last_game_results"
+        android:id="@+id/descriptionTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="@dimen/title_size"
@@ -18,68 +18,61 @@
         tools:text="You're awesome!" />
 
     <TextView
-        android:id="@+id/tv_last_game_scores"
+        android:id="@+id/scoresTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/great_offset"
+        android:layout_marginTop="@dimen/margin_32dp"
         android:textSize="@dimen/title_size"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_last_game_results"
+        app:layout_constraintTop_toBottomOf="@id/descriptionTextView"
         tools:text="10" />
 
     <TextView
-        android:id="@+id/tv_last_game_time"
+        android:id="@+id/durationTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/great_offset"
+        android:layout_marginTop="@dimen/margin_32dp"
         android:textSize="@dimen/title_size"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_last_game_scores"
+        app:layout_constraintTop_toBottomOf="@id/scoresTextView"
         tools:text="1000" />
 
     <TextView
-        android:id="@+id/tv_last_game_points"
+        android:id="@+id/pointsTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/great_offset"
+        android:layout_marginTop="@dimen/margin_32dp"
         android:textSize="@dimen/title_size"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_last_game_time"
+        app:layout_constraintTop_toBottomOf="@id/durationTextView"
         tools:text="10.565656565" />
 
-    <androidx.constraintlayout.widget.Barrier
-        android:id="@+id/title_section_bottom_barrier"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:barrierDirection="bottom"
-        app:constraint_referenced_ids="tv_last_game_results,tv_last_game_scores,tv_last_game_time,tv_last_game_points" />
-
     <Button
-        android:id="@+id/btn_restart"
+        android:id="@+id/restartButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/great_offset"
-        android:layout_marginEnd="@dimen/medium_offset"
+        android:layout_marginTop="@dimen/margin_32dp"
+        android:layout_marginEnd="@dimen/margin_8dp"
         android:backgroundTint="@color/purple_700"
-        android:paddingVertical="@dimen/great_offset"
+        android:paddingVertical="@dimen/margin_32dp"
         android:text="@string/restart_quiz"
-        app:layout_constraintEnd_toStartOf="@id/btn_go_back"
+        app:layout_constraintEnd_toStartOf="@id/backButton"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/title_section_bottom_barrier" />
+        app:layout_constraintTop_toBottomOf="@id/pointsTextView" />
 
     <Button
-        android:id="@+id/btn_go_back"
+        android:id="@+id/backButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/medium_offset"
-        android:layout_marginTop="@dimen/great_offset"
-        android:paddingVertical="@dimen/great_offset"
+        android:layout_marginStart="@dimen/margin_8dp"
+        android:layout_marginTop="@dimen/margin_32dp"
+        android:paddingVertical="@dimen/margin_32dp"
         android:text="@string/back_to_menu"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/btn_restart"
-        app:layout_constraintTop_toBottomOf="@id/title_section_bottom_barrier" />
+        app:layout_constraintStart_toEndOf="@id/restartButton"
+        app:layout_constraintTop_toBottomOf="@id/pointsTextView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

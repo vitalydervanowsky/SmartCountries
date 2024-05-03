@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/menuFragment"
-        android:name="by.dzrvnsk.smartcountries.fragments.MenuFragment"
+        android:name="by.dzrvnsk.smartcountries.presentation.fragments.MenuFragment"
         android:label="fragment_menu"
         tools:layout="@layout/fragment_menu" >
         <action
@@ -22,21 +22,21 @@
     </fragment>
     <fragment
         android:id="@+id/listFragment"
-        android:name="by.dzrvnsk.smartcountries.fragments.ListFragment"
+        android:name="by.dzrvnsk.smartcountries.presentation.fragments.countrylist.CountryListFragment"
         android:label="fragment_list"
-        tools:layout="@layout/fragment_list" >
+        tools:layout="@layout/fragment_country_list" >
         <action
             android:id="@+id/action_listFragment_to_detailsFragment"
             app:destination="@id/detailsFragment" />
     </fragment>
     <fragment
         android:id="@+id/detailsFragment"
-        android:name="by.dzrvnsk.smartcountries.fragments.DetailsFragment"
+        android:name="by.dzrvnsk.smartcountries.presentation.fragments.DetailsFragment"
         android:label="fragment_details"
         tools:layout="@layout/fragment_details" />
     <fragment
         android:id="@+id/loginFragment"
-        android:name="by.dzrvnsk.smartcountries.fragments.LoginFragment"
+        android:name="by.dzrvnsk.smartcountries.presentation.fragments.login.LoginFragment"
         android:label="fragment_login"
         tools:layout="@layout/fragment_login" >
         <action
@@ -50,12 +50,12 @@
     </fragment>
     <fragment
         android:id="@+id/registerFragment"
-        android:name="by.dzrvnsk.smartcountries.fragments.RegisterFragment"
+        android:name="by.dzrvnsk.smartcountries.presentation.fragments.registration.RegistrationFragment"
         android:label="fragment_register"
-        tools:layout="@layout/fragment_register" />
+        tools:layout="@layout/fragment_registration" />
     <fragment
         android:id="@+id/helloFragment"
-        android:name="by.dzrvnsk.smartcountries.fragments.HelloFragment"
+        android:name="by.dzrvnsk.smartcountries.presentation.fragments.HelloFragment"
         android:label="fragment_hello"
         tools:layout="@layout/fragment_hello" >
         <action
@@ -72,7 +72,7 @@
     </fragment>
     <fragment
         android:id="@+id/quizFragment"
-        android:name="by.dzrvnsk.smartcountries.fragments.QuizFragment"
+        android:name="by.dzrvnsk.smartcountries.presentation.fragments.quiz.QuizFragment"
         android:label="fragment_quiz"
         tools:layout="@layout/fragment_quiz" >
         <action
@@ -83,7 +83,7 @@
     </fragment>
     <fragment
         android:id="@+id/resultsFragment"
-        android:name="by.dzrvnsk.smartcountries.fragments.ResultsFragment"
+        android:name="by.dzrvnsk.smartcountries.presentation.fragments.ResultsFragment"
         android:label="fragment_results"
         tools:layout="@layout/fragment_results" >
         <action
@@ -94,7 +94,7 @@
     </fragment>
     <fragment
         android:id="@+id/scoresFragment"
-        android:name="by.dzrvnsk.smartcountries.fragments.ScoresFragment"
+        android:name="by.dzrvnsk.smartcountries.presentation.fragments.scores.ScoresFragment"
         android:label="ScoresFragment"
         tools:layout="@layout/fragment_scores"/>
 </navigation>

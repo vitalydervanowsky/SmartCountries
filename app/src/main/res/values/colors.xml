@@ -10,4 +10,6 @@
     <color name="light_gray">#FFCCCCCC</color>
     <color name="answer_correct">#FF006900</color>
     <color name="answer_incorrect">#FFB01441</color>
+    <color name="color_default_dimmed">#8c000000</color>
+    <color name="color_transparent">#00000000</color>
 </resources>
